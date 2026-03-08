@@ -1,0 +1,15 @@
+Instructions:
+1. Answer the question using ONLY the information from the context.
+2. Do NOT use prior knowledge.
+3. If the context does not contain enough information, say: 
+   "The answer cannot be determined from the provided context."
+4. Keep the answer concise (maximum 5 sentences).
+5. Do not repeat the question.
+
+Context:
+<<CONTEXT>>
+
+Question:
+<<QUESTION>>
+
+Answer:
