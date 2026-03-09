@@ -25,13 +25,14 @@ def process_pdf_file_background(self,file_id,file_name):
         try:
             self.update_state(state="STARTED")
             processor = FileProcessorRegistry.get_registry(file_name)
-            file_path = processor.get_file_path("indexes",file_id)
+            index_file_path = processor.get_file_path("indexes",file_id)
+            upload_file_path = processor.get_file_path("upload",file_id)
 
             logger.info(f"Start processing file {file_id}")
             file = processor.process_file(file_id)
             logger.info(f"File parsed successfully")
 
-            rag_service.parse_file_and_save_FAISS(file,file_id,file_path,db)
+            rag_service.parse_file_and_save_FAISS(file,file_id,upload_file_path,index_file_path,db)
             logger.info(f"FAISS index created for file {file_id}")
 
             db_service.update_file_status(file_id,"SUCCESS",db)
