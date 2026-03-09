@@ -1,6 +1,6 @@
 from langchain_community.vectorstores import FAISS
 from langchain_experimental.text_splitter import SemanticChunker
-from langchain_text_splitters import RecursiveCharacterTextSplitter,MaảkdownHeaderTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter,MarkdownHeaderTextSplitter
 from sentence_transformers import CrossEncoder 
 from docling.document_converter import DocumentConverter
 import os
@@ -19,11 +19,7 @@ class RAGService:
     def __init__(self,embeddings):
         self.child_splitter = SemanticChunker(embeddings=embeddings)
         self.parent_splitter_1 = RecursiveCharacterTextSplitter(chunk_size=2000,chunk_overlap=200,separators=["\n\n", "\n", ".", " "])# seperators: if text is too large after split, recursive split according to seperators
-        self.parent_splitter_2 = MarkdownHeaderTextSplitter(headers_to_split_on=[("#", "Header 1"),      # Tiêu đề lớn nhất (thường là Tên tài liệu hoặc Chương)
-    ("##", "Header 2"),     # Tiêu đề cấp 2 (Mục lớn)
-    ("###", "Header 3"),    # Tiêu đề cấp 3 (Tiểu mục)
-    ("####", "Header 4"),   # Tiêu đề cấp 4 (Thường dùng cho tài liệu kĩ thuật sâu)
-]
+        self.parent_splitter_2 = MarkdownHeaderTextSplitter(headers_to_split_on=[("#", "Header 1"),("##", "Header 2"),("###", "Header 3"),("####", "Header 4")])
         self.reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
         self.embeddings = embeddings 
         self.converter = DocumentConverter()
@@ -43,6 +39,9 @@ class RAGService:
         scored_docs = list(zip(documents,scores)) 
         scored_docs.sort(key=lambda x:x[1], reverse=True) #sort descending
         return [doc for doc,_ in scored_docs[:top_k]] #List[Document]
+    def format_page_content(self,is_structured,chunk): #parent chunk or child chunk
+        if is_structured:
+            
     def load_FAISS_and_retrieve(self,file_id,question,db):
         logger.info("Start processing File", extra={"file_id": file_id})
 
