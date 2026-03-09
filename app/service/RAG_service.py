@@ -1,6 +1,6 @@
 from langchain_community.vectorstores import FAISS
 from langchain_experimental.text_splitter import SemanticChunker
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter,MaảkdownHeaderTextSplitter
 from sentence_transformers import CrossEncoder 
 from docling.document_converter import DocumentConverter
 import os
@@ -18,17 +18,24 @@ logger = logging.getLogger(__name__)
 class RAGService:
     def __init__(self,embeddings):
         self.child_splitter = SemanticChunker(embeddings=embeddings)
-        self.parent_splitter = RecursiveCharacterTextSplitter(chunk_size=2000,chunk_overlap=200,separators=["\n\n", "\n", ".", " "])# seperators: if text is too large after split, recursive split according to seperators 
+        self.parent_splitter_1 = RecursiveCharacterTextSplitter(chunk_size=2000,chunk_overlap=200,separators=["\n\n", "\n", ".", " "])# seperators: if text is too large after split, recursive split according to seperators
+        self.parent_splitter_2 = MarkdownHeaderTextSplitter(headers_to_split_on=[("#", "Header 1"),      # Tiêu đề lớn nhất (thường là Tên tài liệu hoặc Chương)
+    ("##", "Header 2"),     # Tiêu đề cấp 2 (Mục lớn)
+    ("###", "Header 3"),    # Tiêu đề cấp 3 (Tiểu mục)
+    ("####", "Header 4"),   # Tiêu đề cấp 4 (Thường dùng cho tài liệu kĩ thuật sâu)
+]
         self.reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
         self.embeddings = embeddings 
         self.converter = DocumentConverter()
-    def analyze_document(self,file_path):
-        file = self.converter.convert(file_path) #Convert to docling.datamodel.base_models.ConversionResult
-        doc =file.document #DoclingDocument
+    def analyze_document(self,upload_file_path,file):
+        converted_file = self.converter.convert(upload_file_path) #Convert to docling.datamodel.base_models.ConversionResult
+        doc =converted_file.document #DoclingDocument
         markdown_content = doc.export_to_markdown() #Get markdown content => Use for MarkdownHeaderSplitter
         all_elements = list(doc.texts) #doc.texts là một Iterator (trình lặp) chứa các phân đoạn văn bản. Bằng cách ép kiểu sang list, ta lấy được danh sách các đối tượng văn bản.
         headers = [el for el in all_elements if "heading" in el.label.lower()] #Find element which label contains 'heading'
-        return len(headers) >= 5 # If num of headers greater or equal to 5
+        if len(headers) >= 5: # If num of headers greater or equal to 5
+            return self.parent_splitter_2.split_text(markdown_content),True
+        return self.parent_splitter_1.split_documents(file),False
 
     def rerank(self,query,documents,top_k=5):
         pairs = [(query,doc.page_content) for doc in documents] #create pair (query,doc)
@@ -60,8 +67,8 @@ class RAGService:
             final_result.append(parent_chunk.context)
         logger.info("Get context from parent chunks successfully") 
         return "\n".join(final_result)
-    def parse_file_and_save_FAISS(self,file,file_id,file_path,db): #file_path for indexes
-        child_chunks = self.build_parent_child_chunks(file,file_id,db)
+    def parse_file_and_save_FAISS(self,file,file_id,upload_file_path,index_file_path,db): 
+        child_chunks = self.build_parent_child_chunks(file,file_id,upload_file_path,db)
         for i,chunk in enumerate(child_chunks):
             chunk.metadata.update({"chunk_index": i,
                                   "total_chunk":len(child_chunks),
@@ -69,10 +76,10 @@ class RAGService:
         logger.info("Text split completed",extra={"chunks": len(child_chunks)})
 
         vectorstore = FAISS.from_documents(child_chunks,self.embeddings)
-        vectorstore.save_local(file_path)
+        vectorstore.save_local(index_file_path)
         logger.info("FAISS index saved")
-    def build_parent_child_chunks(self,file,file_id,db):
-        parent_chunks = self.parent_splitter.split_documents(file)
+    def build_parent_child_chunks(self,file,file_id,upload_file_path,db):
+        parent_chunks,is_structured = self.analyze_document(upload_file_path,file)
         logger.info("Chunking file into parent chunks successfully")
         child_chunks = []
 
@@ -81,7 +88,7 @@ class RAGService:
             parent_id = str(uuid.uuid4()) 
             db_service.create_parent_chunk(parent_id,file_id,parent_chunk.page_content,db) #Save to database
             children = self.child_splitter.split_documents([parent_chunk]) #Convert into List[Document] as split_documents apply only for list
-            for child_chunk in children:
+            for child_chunk in children: #sửa lại child chunk page content 
                 child_chunk.metadata["parent_id"] = parent_id
                 child_chunks.append(child_chunk)
         logger.info("Chunking children into children chunks successfully")
