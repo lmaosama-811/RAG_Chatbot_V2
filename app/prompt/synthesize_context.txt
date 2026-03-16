@@ -1,0 +1,11 @@
+Write a concise description explaining the context and topic of the
+following chunk within its document.
+
+Rules:
+- maximum 40 words
+- describe the topic and purpose
+- do NOT repeat the chunk
+- do NOT add information not present in the chunk
+
+Chunk:
+<<CHUNK>>

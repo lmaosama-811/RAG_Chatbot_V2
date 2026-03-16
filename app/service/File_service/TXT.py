@@ -4,7 +4,7 @@ from langchain_community.document_loaders import TextLoader
 from fastapi import HTTPException
 
 from .base import FileProcessor
-from .Factory import FileProcessorRegistry
+from .FileFactory import FileProcessorRegistry
 
 @FileProcessorRegistry.register(".txt")
 class TXTProcessor(FileProcessor):
@@ -31,16 +31,28 @@ class TXTProcessor(FileProcessor):
         return os.path.join(base_dir, files[0]) 
     
     def get_file(self,file_id):
-        loader = TextLoader(self.get_file_path("upload",file_id))
-        return loader.load()
+        upload_file_path = self.get_file_path("upload",file_id)
+
+        raw_name = os.path.basename(upload_file_path)
+        file_name = raw_name.replace(f"{file_id}_", "", 1)
+        
+        loader = TextLoader(upload_file_path)
+        list_LCDocument = loader.load()
+        for document in list_LCDocument:
+            document.metadata.update({"file_name":file_name,
+                                      "file_id":file_id})
+        return list_LCDocument
     
     def process_file(self,file_id):
         try:
-            return self.get_file(file_id)
+            return self.get_file(file_id) #return List[LCDocument]
         except HTTPException:
             raise
         except Exception:
             raise HTTPException(status_code=500,detail="Failed to process TXT file")
+        
+    def is_complicated_file(self,doc):
+        return False #.txt is always simple file 
     
     def get_list_file(self):
         return [tuple(f.split("_", 1)) for f in os.listdir(self.upload_dir)]

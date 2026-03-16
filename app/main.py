@@ -6,6 +6,8 @@ from fastapi.responses import JSONResponse
 from .api import upload,chat,session
 from .core.logging_config import setup_logging
 from .core.limiter import limiter 
+import app.service.File_service 
+import app.service.RAG_services.ChunkSplitters
 
 setup_logging()
 

@@ -1,11 +1,11 @@
 import os 
 import uuid
-from langchain_community.document_loaders import PyPDFLoader
 from fastapi import HTTPException
-from pypdf import PdfReader
+import fitz 
+from langchain_core.documents import Document as LCDocument
 
 from .base import FileProcessor
-from .Factory import FileProcessorRegistry
+from .FileFactory import FileProcessorRegistry
 
 @FileProcessorRegistry.register(".pdf")
 class PDFProcessor(FileProcessor):
@@ -14,15 +14,6 @@ class PDFProcessor(FileProcessor):
         self.indexes_dir = "data/indexes/pdf"
         os.makedirs(self.upload_dir,exist_ok=True)
         os.makedirs(self.indexes_dir,exist_ok = True)
-
-    def is_scanned_pdf(self, file_path):
-        reader = PdfReader(file_path)
-
-        for page in reader.pages:
-            text = page.extract_text()
-            if text and len(text.strip()) > 20:
-                return False
-        return True
 
     def save_file(self,file_bytes, file_name):
         file_id = uuid.uuid4().hex #.uuid4() create random UUID, .hex() convert it into 32-character string 
@@ -41,17 +32,48 @@ class PDFProcessor(FileProcessor):
         return os.path.join(base_dir, files[0]) 
     
     def get_file(self,file_id):
-        file_path = self.get_file_path("upload",file_id)
-        loader = PyPDFLoader(file_path)
-        return loader.load()
-    
+        return fitz.open(self.get_file_path("upload",file_id)) #fitz.Document
+        
     def process_file(self,file_id):
         try:
-            return self.get_file(file_id)
+            pdf = self.get_file(file_id)
+            raw_name = os.path.basename(self.get_file_path("upload",file_id))
+            file_name = raw_name.replace(f"{file_id}_", "", 1)
+            total_page = pdf.page_count
+            list_LCDocuments = []
+            for page_num in range(total_page):
+                page = pdf.load_page(page_num)
+                list_LCDocuments.append(LCDocument(page_content=page.get_text(),
+                                                   metadata={"title":pdf.metadata.get("title"),
+                                                             "file_name":file_name,
+                                                             "file_id":file_id,
+                                                             "page":page_num+1,
+                                                             "total_page":total_page}))
+            return list_LCDocuments # return List[Langchain Document]
         except HTTPException:
             raise
         except Exception:
             raise HTTPException(status_code=500,detail="Failed to process PDF file")
-    
+    def is_complicated_file(self,doc): #fitz.Document
+        total_pages = doc.page_count 
+        sample_pages = [0, total_pages // 2, total_pages - 1] if total_pages > 2 else range(total_pages) #page index in first,middle and last page 
+        for p_idx in sample_pages:
+            page = doc[p_idx]
+            
+            # 1. Identify "Text Density": If huge page but too little words -> Scanned file or image 
+            text = page.get_text().strip()
+            if len(text) < 100: 
+                return True # (OCR/Docling Required)
+            
+            # 2. Examine "Vector Complexity": Count lines and rectangles. If > 50 lines/pages => May be complicated tables
+            drawings = page.get_drawings()
+            if len(drawings) > 50:
+                return True # (High Table Density)
+                
+            # 3. Examine "Image Overlap": PDF PDF có nhiều ảnh đè lên nhau
+            if len(page.get_images()) > 5:
+                return True # (Image-heavy Layout)
+        return False 
+
     def get_list_file(self):
         return [tuple(f.split("_", 1)) for f in os.listdir(self.upload_dir)]

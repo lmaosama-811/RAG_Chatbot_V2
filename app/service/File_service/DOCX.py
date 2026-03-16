@@ -1,10 +1,11 @@
 import os 
 import uuid
-from langchain_community.document_loaders import Docx2txtLoader
+from docx import Document
 from fastapi import HTTPException
+from langchain_core.documents import Document as LCDocument 
 
 from .base import FileProcessor
-from .Factory import FileProcessorRegistry
+from .FileFactory import FileProcessorRegistry
 
 @FileProcessorRegistry.register(".docx")
 class DOCXProcessor(FileProcessor):
@@ -31,16 +32,44 @@ class DOCXProcessor(FileProcessor):
         return os.path.join(base_dir, files[0]) 
     
     def get_file(self,file_id):
-        loader = Docx2txtLoader(self.get_file_path("upload",file_id))
-        return loader.load()
+        return Document(self.get_file_path("upload",file_id)) #docx.document.Document 
     
-    def process_file(self,file_id):
+    def process_file(self,file_id):  
         try:
-            return self.get_file(file_id)
+            doc = self.get_file(file_id)
+            raw_name = os.path.basename(self.get_file_path("upload",file_id))
+            file_name = raw_name.replace(f"{file_id}_", "", 1)
+            texts = [p.text for p in doc.paragraphs if p.text.strip()]
+            full_text = "\n".join(texts)
+            return [LCDocument(page_content=full_text,
+                              metadata={"title":doc.core_properties.title,
+                                        "file_name":file_name,
+                                        "file_id": file_id})] #return List[Langchain Document]
         except HTTPException:
             raise
         except Exception:
             raise HTTPException(status_code=500,detail="Failed to process DOCX file")
+        
+    def is_complicated_file(self,doc): #docx.document.Document
+        # 1. Examine the existence of table 
+        if len(doc.tables) > 0:
+            for table in doc.tables:
+                # Check for nested tables (Count the number of sub-boards in each cell.)
+                for row in table.rows:
+                    for cell in row.cells:
+                        if len(cell.tables) > 0:
+                            return True # Nested Tables
+                
+                # Check Merged cells
+                # In python-docx, if actual cells differs from rows*columns
+                if len(table._cells) != (len(table.rows) * len(table.columns)):
+                    return True # Merged Cells
+
+        # 2. Check Textbox and Floating Objects
+        # They're usually in 'inline_shapes' or 'shapes'
+        if len(doc.inline_shapes) > 3:
+            return True # Too much pictures or embedding textbox 
+        return False 
     
     def get_list_file(self):
         return [tuple(f.split("_", 1)) for f in os.listdir(self.upload_dir)]

@@ -16,3 +16,6 @@ class FileProcessor(ABC):
     @abstractmethod
     def get_list_file(self):
         pass
+    @abstractmethod
+    def is_complicated_file(self,doc):
+        pass 

@@ -1,0 +1,10 @@
+Check if the answer is supported by the context.
+Return ONLY a JSON object:
+{
+  "confidence": <float 0.0-1.0>,
+  "reason": "<one sentence>"
+}
+
+Context: <<CONTEXT>>
+Question: <<QUESTION>>
+Answer: <<ANSWER>>

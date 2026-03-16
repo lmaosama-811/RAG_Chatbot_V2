@@ -25,6 +25,7 @@ class FileStatus(SQLModel,table=True):
     __tablename__="file_status"
     id: int=Field(default=None, primary_key=True)
     file_id:str
+    file_name:str #Original name
     type:str
     status:str 
 

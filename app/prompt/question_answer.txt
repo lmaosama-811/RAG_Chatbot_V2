@@ -1,15 +1,23 @@
-Instructions:
-1. Answer the question using ONLY the information from the context.
-2. Do NOT use prior knowledge.
-3. If the context does not contain enough information, say: 
-   "The answer cannot be determined from the provided context."
-4. Keep the answer concise (maximum 5 sentences).
-5. Do not repeat the question.
+ Answer based ONLY on the provided context below.
 
-Context:
+CONTEXT:
 <<CONTEXT>>
 
-Question:
+QUESTION:
 <<QUESTION>>
 
-Answer:
+INSTRUCTIONS:
+1. Answer in the same language as the user's question.
+2. Every claim MUST be followed by a citation like [1], [2], or [1][2] if multiple sources.
+3. At the end of your answer, add a "Sources:" section listing each cited source.
+4. If the answer is not found in the context, respond: "Không tìm thấy thông tin trong tài liệu."
+5. Do NOT fabricate information outside the context.
+
+ANSWER FORMAT:
+<your answer with inline citations like [1], [2]>
+
+Sources:
+[1] <file_name>, trang <page> — "<short snippet>"
+[2] <file_name>, trang <page> — "<short snippet>"
+
+Remember: EVERY claim needs a citation. An answer without [1] is incomplete.

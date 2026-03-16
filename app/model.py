@@ -1,5 +1,4 @@
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-import fasttext
 
 from .core.env_config import settings
 
@@ -17,5 +16,3 @@ llm = ChatOpenAI(
     max_tokens=1000,
     streaming=True #turn on streaming
 )
-
-lang_model = fasttext.load_model("app/download_models/lid.176.bin")

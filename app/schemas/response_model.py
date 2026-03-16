@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel,Field
 
 class Message(BaseModel):
     message:str
@@ -12,6 +12,7 @@ class ChatBotResponse(BaseModel):
     session_id: str
     session_name: str
     answer: str
+    confidence: float = Field(ge=0,le=1)
 
 class Session(BaseModel):
     session_id: str 

@@ -1,0 +1,19 @@
+Analyze the question and return a JSON object.
+
+Rules:
+- type "chit_chat": greetings, small talk, unrelated to documents
+- type "simple": single-topic, needs document lookup
+- type "complex": multi-part question
+
+For queries, generate in 2 rounds in case first round fails to find results:
+- round1: rewritten queries (clear, specific)
+- round2: reformulated queries (synonyms, broader terms, different angle)
+
+Return ONLY valid JSON:
+{
+  "type": "chit_chat" | "simple" | "complex",
+  "round1": ["query1", "query2"],
+  "round2": ["query3", "query4"]
+}
+
+Question: <<QUESTION>>

@@ -1,12 +1,15 @@
 import os
+from langdetect import detect
+import logging
 
-from .model import lang_model
 from .core.env_config import settings 
-from .service.File_service.Factory import FileProcessorRegistry
+from .service.File_service.FileFactory import FileProcessorRegistry
 from .service.DB_service import db_service
-
+logger =logging.getLogger(__name__)
 def get_processor_from_file_type(file_id,db):
     file_type= db_service.get_file_type(file_id,db)
+    if file_type is None:
+        raise ValueError(f"File ID {file_id} not found in database")
     return FileProcessorRegistry.get_registry(extension=file_type)
 
 def check_file_available(file_id,db):
@@ -18,13 +21,11 @@ def check_file_type(file):
     ext = os.path.splitext(file.filename)[1].lower()
     return ext in FileProcessorRegistry.registry
 
-def detect_language(text: str):
-    if not text.strip():
+def detect_language(text):
+    try:
+        return detect(text)
+    except Exception:
         return "unknown"
-    label, prob = lang_model.predict(text)
-    lang = label[0].replace("__label__", "")
-    return lang
-
 def check_session_id_available(session_id,db):
     return db_service.get_conversation(session_id, db) is not None 
 
@@ -53,4 +54,5 @@ Initial version:
     
 def validate_file_status(file_id,db):
     status = db_service.get_file_status(file_id,db)
-    return status == "SUCCESS"
+    logger.info(f"Status state:{status}")
+    return status == 'SUCCESS'

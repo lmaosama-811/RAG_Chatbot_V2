@@ -34,9 +34,10 @@ class ConversationManagement:
     
     def analyze_conversation_history(self,session_id,db,llm): #return history conversation list[dict(role,content)]
         old_summary = db_service.get_last_summary(session_id,db) #Summary
-        if old_summary is None: #không có old summary -> chưa tóm tắt lần nào -> load history như bình thường, nếu quá threshold thì tự thêm summary và trả về 
+        last_dialog = db_service.get_last_dialog(session_id,db) #ConversationHistory
+        if old_summary is None or last_dialog is None: #không có old summary (hoặc không có lịch sử chat) -> chưa tóm tắt lần nào -> load history như bình thường, nếu quá threshold thì tự thêm summary và trả về 
             return self.load_conversation_history_and_update_summarization(session_id,db,llm)
-        elif (db_service.get_last_dialog(session_id,db).id - old_summary.covered_until_message_id +1) <= self.compress_threshold: #nhỏ hơn threshold thì trả recent_dialogs + old_summary 
+        elif (last_dialog.id - old_summary.covered_until_message_id +1) <= self.compress_threshold: #nhỏ hơn threshold thì trả recent_dialogs + old_summary 
             return [{"role":"system","content":old_summary.content}] + self.load_conversation_history_and_update_summarization(session_id,db,llm,old_summary.covered_until_message_id)
         else: #lấy 5 messages + old summary = new summary, cho vào table và trả về history 
             dialogs_for_summary = db_service.get_conversation_history(session_id,db)[old_summary.covered_until_message_id -1:old_summary.covered_until_message_id +5]
