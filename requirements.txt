@@ -15,7 +15,6 @@ redis==7.2.1
 langdetect==1.0.9
 eventlet==0.40.4
 unstructured==0.21.5
-langchain==1.2.10
 docling==2.77.0 
 pymupdf==1.27.2 
 python-docx==1.2.0
