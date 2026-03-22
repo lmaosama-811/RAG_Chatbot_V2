@@ -18,14 +18,15 @@ RAG Chatbot is a document-based question answering system that enhances LLM resp
 
 | Area | Improvement |
 |---|---|
-| **File support** | PDF, DOCX, TXT with asynchronous background ingestion |
+| **File support** | PDF, DOCX, TXT, HTML (Crawl4AI) with asynchronous background ingestion |
+| **Auto-Update RAG** | Celery Beat Cron jobs automatically fetching latest articles from URLs every 6 hours |
+| **Global Indexing** | Centralized FAISS Database for broad Data with automatic in-memory Hot-Reloading |
+| **Retrieval** | Self-Querying architecture to resolve temporal drift (e.g. "this year") using explicit MetaData matching |
 | **Chunking** | Hierarchical, Semantic, Hybrid strategies — configurable via `.env` |
 | **Search** | Hybrid search (Dense + BM25) merged with RRF ranking |
-| **Retrieval** | Multi-query retrieval + query decomposition |
 | **Adaptive RAG** | Query classification (chit-chat vs document), relevance check, sufficiency check with retry |
-| **Reliability** | Hallucination detection with confidence score |
-| **Citation** | Inline source attribution `[1]`, `[2]` with file name and page number |
-| **Bugs** | Remaining issues from v1 resolved |
+| **Reliability** | Hallucination detection wrapped in fault-tolerant execution blocks |
+| **Citation** | Inline accurate source attribution `[1]` with rigorous fallback and web-document sanitization |
 
 ---
 
@@ -233,8 +234,9 @@ LLMService.analyze_query()
 | **Full-text Search** | BM25 |
 | **Reranker** | Cross-Encoder (`ms-marco-MiniLM-L-6-v2`) |
 | **ORM** | SQLModel |
-| **Document Processing** | PyMuPDF · python-docx · Docling |
+| **Document Processing** | PyMuPDF · python-docx · Docling · Crawl4AI |
 | **Background Tasks** | Celery + Redis |
+| **Job Scheduler** | Celery Beat (Cron) |
 | **Rate Limiting** | SlowAPI |
 
 ---
@@ -244,7 +246,8 @@ LLMService.analyze_query()
 | Method | Endpoint | Description |
 |---|---|---|
 | `POST` | `/upload` | Upload a file for processing |
-| `POST` | `/chat` | Ask a question against an uploaded file |
+| `POST` | `/chat/upload_file` | Ask a question against a specific uploaded file |
+| `POST` | `/chat/government_data` | Chat entirely against the Global Unified Vector Database |
 | `GET` | `/session/list` | List all conversation sessions |
 | `POST` | `/session/update/{session_id}` | Rename a session |
 | `DELETE` | `/session/delete/{session_id}` | Delete a session and its history |
