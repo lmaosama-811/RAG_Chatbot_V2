@@ -31,13 +31,14 @@ class DOCXProcessor(FileProcessor):
             return os.path.join(base_dir, file_id)
         return os.path.join(base_dir, files[0]) 
     
-    def get_file(self,file_id):
-        return Document(self.get_file_path("upload",file_id)) #docx.document.Document 
+    def get_file(self,file_id,upload_file_path=None):
+        upload_file_path = (self.get_file_path("upload",file_id) if upload_file_path is None else upload_file_path)
+        return Document(upload_file_path) #docx.document.Document 
     
-    def process_file(self,file_id):  
+    def process_file(self,file_id,upload_file_path=None):  
         try:
-            doc = self.get_file(file_id)
-            raw_name = os.path.basename(self.get_file_path("upload",file_id))
+            doc = self.get_file(file_id,upload_file_path)
+            raw_name = (os.path.basename(self.get_file_path("upload",file_id)) if upload_file_path is None else os.path.basename(upload_file_path))
             file_name = raw_name.replace(f"{file_id}_", "", 1)
             texts = [p.text for p in doc.paragraphs if p.text.strip()]
             full_text = "\n".join(texts)

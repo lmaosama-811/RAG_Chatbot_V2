@@ -17,10 +17,6 @@ def check_file_available(file_id,db):
     file_path = processor.get_file_path("upload",file_id)
     return os.path.isfile(file_path) 
 
-def check_file_type(file):
-    ext = os.path.splitext(file.filename)[1].lower()
-    return ext in FileProcessorRegistry.registry
-
 def detect_language(text):
     try:
         return detect(text)

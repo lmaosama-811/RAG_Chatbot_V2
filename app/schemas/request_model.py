@@ -6,6 +6,10 @@ class ChatbotRequest(BaseModel):
     file_id: str
     question: str 
 
+class GovernmentChatRequest(BaseModel):
+    session_id: str|None=None
+    question: str 
+
 class ConversationHistory(SQLModel, table=True):
     __tablename__="conversation_history"
     id:int|None = Field(default=None, primary_key=True)

@@ -8,10 +8,10 @@ class FileProcessor(ABC):
     def get_file_path(self,folder,file_id):
         pass
     @abstractmethod
-    def get_file(self,file_id):
+    def get_file(self,file_id,upload_file_path=None):
         pass
     @abstractmethod
-    def process_file(self,file_id):
+    def process_file(self,file_id,upload_file_path=None):
         pass
     @abstractmethod
     def get_list_file(self):

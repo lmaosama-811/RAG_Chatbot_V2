@@ -30,8 +30,8 @@ class TXTProcessor(FileProcessor):
             return os.path.join(base_dir, file_id)
         return os.path.join(base_dir, files[0]) 
     
-    def get_file(self,file_id):
-        upload_file_path = self.get_file_path("upload",file_id)
+    def get_file(self,file_id,upload_file_path=None):
+        upload_file_path = (self.get_file_path("upload",file_id) if upload_file_path is None else upload_file_path)
 
         raw_name = os.path.basename(upload_file_path)
         file_name = raw_name.replace(f"{file_id}_", "", 1)
@@ -43,9 +43,9 @@ class TXTProcessor(FileProcessor):
                                       "file_id":file_id})
         return list_LCDocument
     
-    def process_file(self,file_id):
+    def process_file(self,file_id,upload_file_path=None):
         try:
-            return self.get_file(file_id) #return List[LCDocument]
+            return self.get_file(file_id,upload_file_path) #return List[LCDocument]
         except HTTPException:
             raise
         except Exception:

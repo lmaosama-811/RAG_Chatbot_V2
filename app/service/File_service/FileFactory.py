@@ -16,11 +16,11 @@ class FileProcessorRegistry:
         ext = os.path.splitext(file_name)[1].lower() if file_name is not None else extension
         processor = cls.registry.get(ext)
         if processor is None:
-            raise HTTPException(status_code=400, detail=f"File extension '{ext}' not supported. Supported: {list(cls.registry.keys())}")
+            return cls.registry.get("rest")
         return processor
     
     @classmethod
-    def inspect_file_and_routing(cls,file_id,processor=None,file_name=None, extension=None): #classify whether file is simple or complicated structured
+    def inspect_file_and_routing(cls,file_id,processor=None,file_name=None, extension=None,upload_file_path=None): #classify whether file is simple or complicated structured
         processor = (cls.get_registry(file_name,extension) if processor is None else processor)
-        doc = processor.get_file(file_id)
+        doc = processor.get_file(file_id,upload_file_path)
         return processor.is_complicated_file(doc)

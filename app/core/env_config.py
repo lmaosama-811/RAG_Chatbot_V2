@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     confidence: float
     max_retry: int
     confidence_threshold: float
+    target_extensions: list[str]
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8"

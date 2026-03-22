@@ -31,13 +31,14 @@ class PDFProcessor(FileProcessor):
             return os.path.join(base_dir, file_id)
         return os.path.join(base_dir, files[0]) 
     
-    def get_file(self,file_id):
-        return fitz.open(self.get_file_path("upload",file_id)) #fitz.Document
+    def get_file(self,file_id,upload_file_path=None):
+        upload_file_path = (self.get_file_path("upload",file_id) if upload_file_path is None else upload_file_path)
+        return fitz.open(upload_file_path) #fitz.Document
         
-    def process_file(self,file_id):
+    def process_file(self,file_id,upload_file_path=None):
         try:
-            pdf = self.get_file(file_id)
-            raw_name = os.path.basename(self.get_file_path("upload",file_id))
+            pdf = self.get_file(file_id,upload_file_path)
+            raw_name = (os.path.basename(self.get_file_path("upload",file_id)) if upload_file_path is None else os.path.basename(upload_file_path))
             file_name = raw_name.replace(f"{file_id}_", "", 1)
             total_page = pdf.page_count
             list_LCDocuments = []

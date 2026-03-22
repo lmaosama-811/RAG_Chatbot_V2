@@ -53,7 +53,13 @@ class LLMService:
             if chunk.content:
                 yield chunk.content
     def analyze_query(self, llm,question: str) -> dict:
+        from datetime import datetime
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        current_year = datetime.now().year
+
         user_content = self.format_user_content("analyze_query", question=question)
+        user_content += f"\n\n[CRITICAL NOTE FOR REWRITING]: The current system date is {current_date}. You MUST resolve any implicit temporal phrases in the user's query (e.g., 'this year', 'next month', 'năm nay', 'hôm nay') into concrete numbers or years (e.g., '{current_year}') when generating queries for the vector database!"
+
         model_output = self.ask_model(llm, "analyze_query", user_content)
 
         try:
@@ -67,12 +73,12 @@ class LLMService:
         
     def hallucination_check(self,llm, question:str,context:str, answer: str):
         user_content = self.format_user_content("hallucination_check",context=context, question=question, answer=answer)
-        model_output = self.ask_model(llm, "hallucination_check", user_content)
-
         try:
+            model_output = self.ask_model(llm, "hallucination_check", user_content)
             result = json.loads(model_output.content.strip())
             confidence = float(result.get("confidence", 1.0))
-        except Exception:
+        except Exception as e:
+            logger.warning(f"Hallucination check aborted/failed by API: {e}")
             confidence = 1.0
 
         return confidence

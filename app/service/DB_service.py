@@ -12,7 +12,10 @@ class DBService:
         return text.strip()
     
     def get_list_file(self,type_of_file,db):
-        cmd = select(FileStatus.file_name,FileStatus.file_id).where(FileStatus.type==type_of_file)
+        if type_of_file == "rest":
+            cmd = select(FileStatus.file_name,FileStatus.file_id).where(FileStatus.type.notin_([".docx", ".pdf", ".txt"]))
+        else:
+            cmd = select(FileStatus.file_name,FileStatus.file_id).where(FileStatus.type==type_of_file)
         return db.exec(cmd).mappings().all() #List[Tuple]
     
     def get_conversation_history(self,session_id:int, db):
@@ -75,10 +78,15 @@ class DBService:
         cmd = select(FileStatus.type).where(FileStatus.file_id==file_id)
         return db.exec(cmd).first()
     
-    def create_file(self,db,file_id,file_name,type,status="PENDING"):
-        new_file = FileStatus(file_id=file_id,file_name=file_name,type=type,status=status)
-        db.add(new_file)
+    def create_file(self, db, file_id, file_name, type, status="PENDING"):
+        file = FileStatus(file_id=file_id, file_name=file_name, type=type, status=status)
+        db.add(file)
         db.commit()
+
+    def check_file_exists_by_name(self, file_name: str, db) -> bool:
+        stmt = select(FileStatus).where(FileStatus.file_name == file_name)
+        result = db.exec(stmt).first()
+        return result is not None
 
     def update_file_status(self,file_id,status,db):
         cmd=update(FileStatus).where(FileStatus.file_id==file_id).values(status=status)
