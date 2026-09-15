@@ -1,16 +1,54 @@
-Update the existing summary by incorporating the new messages.
+Update the existing conversation summary by incrementally integrating the key information from the new messages while preserving critical context. You must reason internally but output ONLY the updated summary text — no explanation, no markdown meta-announcements, no text before or after.
 
-Instructions:
-- Retain important information from the old summary.
-- Integrate key points from the new messages.
-- Remove redundancy.
-- Keep the updated summary concise and coherent.
-- Do not repeat unchanged details unnecessarily.
+Task:
+1. Identify and extract new substantive updates:
+   - New facts, user decisions, explicit preferences, pending action items, and shifts in conversational focus from the new messages.
+   - Ignore conversational pleasantries, affirmations, and filler dialogue.
+2. Synthesize with the old summary:
+   - Retain all persistent background context, resolved milestones, and active constraints from the old summary.
+   - Resolve conflicts or changes in user intent by favoring the latest stated positions.
+   - Condense or prune details that have become redundant, superseded, or obsolete.
+3. Formulate the consolidated summary:
+   - Write a coherent, dense, and objective summary in narrative or compact bulleted form.
 
+Constraints:
+- Keep the summary concise and focused on high-signal information.
+- Avoid duplicate statements or re-explaining settled topics.
+- Never hallucinate unstated details or extrapolate beyond the provided text.
+- Preserve the dominant language of the summary and conversation.
+- Output plain summary text only — do not include labels like "Summary:" or wrap the output in quotes.
+
+Input format:
 Old Summary:
 <<OLDSUMMARY>>
 
 New Messages:
 <<MESSAGES>>
 
-Updated Summary:
+Output format:
+<Updated concise summary text>
+
+Example 1:
+Old Summary:
+Người dùng đang phát triển một API backend bằng FastAPI để tìm kiếm văn bản và đã thiết lập kết nối cơ bản với cơ sở dữ liệu.
+New Messages:
+User: "Tôi vừa tích hợp thêm thư viện Qdrant để làm hybrid search. Hiện tại gặp lỗi timeout khi truy vấn đồng thời."
+Assistant: "Bạn có thể kiểm tra cấu hình connection pool và tăng timeout limit trong client của Qdrant."
+Output:
+Người dùng đang xây dựng API backend bằng FastAPI và đã tích hợp thêm Qdrant cho tính năng hybrid search. Hiện tại hệ thống đang gặp lỗi timeout khi xử lý các truy vấn đồng thời, và giải pháp được đề xuất là kiểm tra cấu hình connection pool cùng giá trị timeout limit của client.
+
+Example 2:
+Old Summary:
+Khách hàng muốn đặt phòng khách sạn tại Đà Nẵng từ ngày 10/10 đến 12/10 cho 2 người lớn, ngân sách khoảng 1.500.000 VNĐ/đêm.
+New Messages:
+User: "Mình đổi lịch rồi nhé, sẽ đi từ ngày 15/10 đến 17/10. Có thêm 1 bé 4 tuổi đi cùng nữa."
+Assistant: "Đã ghi nhận thay đổi ngày và số lượng khách của bạn."
+Output:
+Khách hàng cần đặt phòng khách sạn tại Đà Nẵng với lịch trình dời sang ngày 15/10 đến 17/10, dành cho 2 người lớn và 1 trẻ em 4 tuổi, trong tầm ngân sách 1.500.000 VNĐ/đêm.
+
+Here is the input from user:
+Old Summary:
+<<OLDSUMMARY>>
+
+New Messages:
+<<MESSAGES>>

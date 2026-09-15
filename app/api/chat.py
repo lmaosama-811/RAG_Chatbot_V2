@@ -40,9 +40,11 @@ def chat_upload_file(request: Request,query: ChatbotRequest, db: Session = Depen
         return Error(code=404,error="Session ID not Found")
     session_id = (CM_service.generate_session_id() if query.session_id is None else query.session_id)
 
+    #Load conversation history 
+    conversation_history = CM_service.analyze_conversation_history(session_id,db,llm)
 
     #------LLM Call 1: Analyze query--------
-    analysis = llm_service.analyze_query(llm,query.question)
+    analysis = llm_service.analyze_query(llm,query.question,conversation_history)
     q_type   = analysis["type"]
     logger.info(f"Query analyzed. Type: {q_type}")
 
@@ -64,9 +66,6 @@ def chat_upload_file(request: Request,query: ChatbotRequest, db: Session = Depen
     context = rag_service.load_FAISS_and_retrieve(query.file_id,query.question,analysis,settings.strategy,db)
     if context is None:
         return ChatBotResponse(model_name=llm.model_name,session_id=session_id,session_name=session_id,answer="Lack of context. Can not answer this question. Please try another question", confidence=0.0) 
-
-    #Load conversation history 
-    conversation_history = CM_service.analyze_conversation_history(session_id,db,llm)
 
     #create user content 
     user_content = llm_service.format_user_content("question_answer",context,query.question)
@@ -117,8 +116,11 @@ async def chat_government_data(request: Request,query: GovernmentChatRequest, db
     session_id = (CM_service.generate_session_id() if query.session_id is None else query.session_id)
     session_name = "Government Data"
 
+    #Load conversation history 
+    conversation_history = CM_service.analyze_conversation_history(session_id,db,llm)
+
     #------LLM Call 1: Analyze query--------
-    analysis = llm_service.analyze_query(llm,query.question)
+    analysis = llm_service.analyze_query(llm,query.question,conversation_history)
     q_type   = analysis["type"]
     logger.info(f"Query analyzed. Type: {q_type}")
 
@@ -139,9 +141,6 @@ async def chat_government_data(request: Request,query: GovernmentChatRequest, db
     context = rag_service.retrieve_from_global(query.question, analysis, settings.strategy, db)
     if context is None:
         return ChatBotResponse(model_name=llm.model_name,session_id=session_id,session_name=session_name,answer="Lack of context. Can not answer this question. Please try another question", confidence=0.0) 
-
-    #Load conversation history 
-    conversation_history = CM_service.analyze_conversation_history(session_id,db,llm)
 
     #create user content 
     user_content = llm_service.format_user_content("question_answer",context,query.question)

@@ -75,7 +75,7 @@ class RAGService:
         return scores, all_docs
     
     def relevance_and_sufficiency_check(self,docs, min_docs=settings.min_relevant_docs, score_threshold=settings.relevance_threshold):
-        relevant_docs = [d for d in docs if d.metadata.get("_rrf_score", 1) >= score_threshold] # Only get documents that rrf score greater than score_threshold => Get relevant documents
+        relevant_docs = [d for d in docs if d.metadata.get("relevance_score", -float("inf")) >= score_threshold] # Only get documents that rrf score greater than score_threshold => Get relevant documents
         return len(relevant_docs) > 0, len(relevant_docs) >= min_docs #is_relevant, is_suficiency 
     
     def multi_query_hybrid_search(self,question,bm25,faiss,generated_queries, filter_dict=None, top_k=settings.top_k,bm25_w=settings.bm25_w,faiss_w=settings.faiss_w):
@@ -137,7 +137,10 @@ class RAGService:
                 break 
             docs = self.multi_query_hybrid_search(question, bm25_retriever, faiss_retriever, queries, filter_dict) # List[Document]
 
-            is_relevant, is_sufficient = self.relevance_and_sufficiency_check(docs)
+            reranked_docs = chunker.rerank(question,docs) #List[Document]
+            logger.info("Rerank chunks successfully")
+
+            is_relevant, is_sufficient = self.relevance_and_sufficiency_check(reranked_docs)
             logger.info("Relevance check",
                         extra={"relevant": is_relevant,
                             "sufficient": is_sufficient,
@@ -156,9 +159,6 @@ class RAGService:
             return None
         
         logger.info("Documents retrieved")
-        
-        reranked_docs = chunker.rerank(question,docs) #List[Document]
-        logger.info("Rerank child chunks successfully")
         
         if strategy == 'hybrid':
             final_result = chunker.get_parent_chunks_from_database(reranked_docs, db) #List[str]

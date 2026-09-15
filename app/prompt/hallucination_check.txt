@@ -1,10 +1,81 @@
-Check if the answer is supported by the context.
+Check if the answer is supported by the context. Evaluate by selecting a score 0.0, 0.5 or 1.0, and give the reason why you mark that score shortly (at most 2 sentences).
+
+Task:
+1. Evaluating whether the answer is supported by provided context by giving a score:
+- 1.0: Fully supported. Every claim in the answer is directly backed by the context. 
+- 0.5: Partially supported. The answer contains some correct information from the context, but also includes unverified assumptions or details not mentioned in the context. 
+- 0.0: Contradicted or completely unsupported/unrelated. The answer contradicts the context or is entirely fabricated.
+2. Give the reason for the score
+
+Constraints:
+- Rely ONLY on the provided context as the ground truth. Do NOT use outside knowledge. 
+- If a fact is not mentioned in the context, treat it as unsupported.
+- If the context does not contain related information and the LLM truthful answer that “I don’t know” -> score 1.0 for honesty. 
+
+Input format:
+Context: The provided context.
+Question: The query from the user. 
+Answer: The answer that LLM generates after reading the above context.
+
+Output format:
 Return ONLY a JSON object:
 {
-  "confidence": <float 0.0-1.0>,
-  "reason": "<one sentence>"
+  "confidence": <float 0.0 | 0.5 |1.0>,
+  "reason": "<at most 2 sentences>"
 }
 
+Example 1: Score 1.0 - Fully supported
+
+Input:
+Context: Hãng hàng không Bamboo Airways thông báo ngừng khai thác toàn bộ các đường bay quốc tế thường lệ từ ngày 29/10/2023 nhằm tái cơ cấu đội tàu bay và tối ưu chi phí vận hành.
+Question: Bamboo Airways dừng các chặng bay quốc tế từ thời điểm nào và vì sao?
+Answer: Hãng dừng toàn bộ chuyến bay quốc tế thường lệ từ ngày 29/10/2023 để tái cơ cấu đội bay và cắt giảm chi phí vận hành.
+
+Output: 
+{
+  "confidence": 1.0,
+  "reason": "The answer directly reflects the exact date and reasons for stopping international flights as stated in the context. No external or fabricated information is introduced."
+}
+Example 2: Score 0.5 - Partly supported, contain outside knowledge
+
+Input:
+Context: Python 3.12 chính thức ra mắt vào tháng 10 năm 2023 với nhiều cải tiến về hiệu năng và thông báo lỗi rõ ràng hơn.
+Question: Python 3.12 ra mắt khi nào và có gì mới?
+Answer: Python 3.12 được phát hành vào tháng 10 năm 2023, mang lại hiệu năng tốt hơn, cải thiện thông báo lỗi và bổ sung tính năng bỏ Global Interpreter Lock (GIL).
+
+Output:
+{
+  "confidence": 0.5,
+  "reason": "The release date and performance/error message improvements are supported by the context. However, the mention of removing the GIL is not stated in the context and represents an unsupported hallucination."
+}
+
+Example 3: Score 0.0 - contradict or fully hallucinate
+
+Input:
+Context: Khách hàng muốn hủy gói đăng ký Pro phải gửi yêu cầu qua email hỗ trợ ít nhất 3 ngày làm việc trước kỳ thanh toán tiếp theo.
+Question: Tôi có thể tự bấm nút hủy gói Pro trực tiếp trên trang web không?
+Answer: Có, bạn chỉ cần vào phần Cài đặt tài khoản trên giao diện web và chọn Hủy đăng ký bất cứ lúc nào.
+
+Output:
+{
+  "confidence": 0.0,
+  "reason": "The answer directly contradicts the context, which specifies that cancellation must be submitted via support email at least 3 business days in advance. There is no mention of self-service cancellation via web settings."
+}
+
+Example 4: Score 1.0 - Faithful Refusal (Context lacks info, Answer correctly refuses)
+
+Input:
+Context: Cửa hàng mở cửa từ 8:00 đến 22:00 hàng ngày từ thứ Hai đến thứ Bảy. Khách hàng có thể thanh toán bằng tiền mặt hoặc chuyển khoản ngân hàng.
+Question: Cửa hàng có chính sách đổi trả hàng trong vòng bao nhiêu ngày?
+Answer: Dựa vào thông tin được cung cấp, không có nội dung nào đề cập đến chính sách đổi trả hàng của cửa hàng.
+
+Output:
+{
+  "confidence": 1.0,
+  "reason": "The context does not contain any information about the return policy, and the answer accurately states this limitation without fabricating facts."
+}
+
+Here is the context, question and answer that you need to verify:
 Context: <<CONTEXT>>
 Question: <<QUESTION>>
 Answer: <<ANSWER>>

@@ -52,12 +52,12 @@ class LLMService:
         for chunk in llm.stream(prompt):
             if chunk.content:
                 yield chunk.content
-    def analyze_query(self, llm,question: str) -> dict:
+    def analyze_query(self, llm,question: str,conversation_history) -> dict:
         from datetime import datetime
         current_date = datetime.now().strftime("%Y-%m-%d")
         current_year = datetime.now().year
 
-        user_content = self.format_user_content("analyze_query", question=question)
+        user_content = self.format_user_content("analyze_query", question=question,conversation_history=conversation_history)
         user_content += f"\n\n[CRITICAL NOTE FOR REWRITING]: The current system date is {current_date}. You MUST resolve any implicit temporal phrases in the user's query (e.g., 'this year', 'next month', 'năm nay', 'hôm nay') into concrete numbers or years (e.g., '{current_year}') when generating queries for the vector database!"
 
         model_output = self.ask_model(llm, "analyze_query", user_content)

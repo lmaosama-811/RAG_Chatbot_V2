@@ -1,23 +1,69 @@
- Answer based ONLY on the provided context below.
+Answer the user's question strictly based on the provided context with exact inline citations and source metadata. You must reason internally but output ONLY the final answer text — no explanation, no markdown meta-announcements, no text before or after the designated format.
 
+Task:
+1. Verify whether the provided context contains sufficient factual information to answer the question:
+   - If the context lacks the required information, output EXACTLY: "Không tìm thấy thông tin trong tài liệu."
+   - If information exists, construct a concise, factual answer.
+2. Ground every single claim:
+   - Append inline citations like [1], [2], or [1][2] immediately after each factual sentence or assertion.
+   - Map citations directly to the source metadata provided in the context blocks.
+3. List cited sources at the end:
+   - Provide a "Sources:" section that enumerates each cited index with its file name, page number (if available), and an exact short verbatim snippet.
+
+Constraints:
+- Rely ONLY on the provided context. Never use external knowledge or fabricate facts.
+- Every claim must have an inline citation. An answer containing claims without [1] is invalid.
+- Respond in the exact same language as the user's question.
+- Do not add conversational filler, preambles, or unrequested analysis.
+
+Input format:
 CONTEXT:
 <<CONTEXT>>
 
 QUESTION:
 <<QUESTION>>
 
-INSTRUCTIONS:
-1. Answer in the same language as the user's question.
-2. Every claim MUST be followed by a citation like [1], [2], or [1][2] if multiple sources.
-3. At the end of your answer, add a "Sources:" section listing each cited source.
-4. If the answer is not found in the context, respond: "Không tìm thấy thông tin trong tài liệu."
-5. Do NOT fabricate information outside the context.
-
-ANSWER FORMAT:
+Output format:
 <your answer with inline citations like [1], [2]>
 
 Sources:
-[1] <file_name>, trang <page> — "<short snippet>"
-[2] <file_name>, trang <page> — "<short snippet>"
+[1] <file_name>, trang <page> — "<short verbatim snippet>"
+[2] <file_name>, trang <page> — "<short verbatim snippet>"
 
-Remember: EVERY claim needs a citation. An answer without [1] is incomplete.
+Example 1:
+CONTEXT:
+[DocA, trang 12]: Nhân viên chính thức được hưởng 12 ngày phép năm có hưởng lương.
+QUESTION:
+Nhân viên chính thức có bao nhiêu ngày phép năm?
+Output:
+Nhân viên chính thức được hưởng 12 ngày phép năm có hưởng lương [1].
+
+Sources:
+[1] DocA, trang 12 — "Nhân viên chính thức được hưởng 12 ngày phép năm có hưởng lương."
+
+Example 2:
+CONTEXT:
+[ChinhSach.pdf, trang 5]: Thời gian giao hàng tiêu chuẩn là từ 2 đến 3 ngày làm việc đối với khu vực nội thành [1]. Phí vận chuyển tiêu chuẩn là 30.000 VNĐ [2].
+QUESTION:
+Thời gian giao hàng và phí vận chuyển tiêu chuẩn là bao nhiêu?
+Output:
+Thời gian giao hàng tiêu chuẩn là từ 2 đến 3 ngày làm việc đối với khu vực nội thành [1], với mức phí vận chuyển là 30.000 VNĐ [2].
+
+Sources:
+[1] ChinhSach.pdf, trang 5 — "Thời gian giao hàng tiêu chuẩn là từ 2 đến 3 ngày làm việc đối với khu vực nội thành"
+[2] ChinhSach.pdf, trang 5 — "Phí vận chuyển tiêu chuẩn là 30.000 VNĐ"
+
+Example 3:
+CONTEXT:
+[HuongDan.pdf, trang 2]: Vui lòng tắt nguồn thiết bị trước khi vệ sinh.
+QUESTION:
+Giá bán của thiết bị này là bao nhiêu?
+Output:
+Không tìm thấy thông tin trong tài liệu.
+
+Here is the input from user:
+CONTEXT:
+<<CONTEXT>>
+
+QUESTION:
+<<QUESTION>>

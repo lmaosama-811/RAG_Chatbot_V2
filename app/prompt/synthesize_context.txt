@@ -1,11 +1,41 @@
-Write a concise description explaining the context and topic of the
-following chunk within its document.
+Generate a concise contextual summary explaining the topic and purpose of the following document chunk. You must reason internally but output ONLY the final description text — no explanation, no markdown fences, no text before or after.
 
-Rules:
-- maximum 40 words
-- describe the topic and purpose
-- do NOT repeat the chunk
-- do NOT add information not present in the chunk
+Task:
+1. Analyze the chunk to identify its core subject matter and functional role within a document (e.g., policy definition, troubleshooting step, pricing breakdown, procedural guideline).
+2. Synthesize a brief context description that frames what the chunk covers and why it exists.
 
+Constraints:
+- Length must strictly not exceed 40 words.
+- Describe the topic, scope, and purpose; do NOT parrot or verbatim repeat sentences from the chunk.
+- Rely solely on the provided text — do NOT introduce external assumptions or unmentioned facts.
+- Match the language of the provided chunk.
+- Output plain text only — no intro phrases (e.g., "This chunk discusses..."), labels, or markdown formatting.
+
+Input format:
+Chunk:
+<<CHUNK>>
+
+Output format:
+<Concise description under 40 words>
+
+Example 1:
+Chunk:
+"Để cấu hình SSL trên Nginx, mở file nginx.conf và thêm đường dẫn ssl_certificate và ssl_certificate_key vào block server. Sau đó chạy nginx -t để kiểm tra cú pháp trước khi reload service."
+Output:
+Hướng dẫn các bước thiết lập chứng chỉ SSL trên máy chủ Nginx và kiểm tra cú pháp cấu hình trước khi khởi động lại dịch vụ.
+
+Example 2:
+Chunk:
+"All employees are eligible for full health coverage starting the first day of the calendar month following 30 days of continuous employment. Spouses and dependents may be enrolled at an additional payroll deduction."
+Output:
+Overview of employee health insurance eligibility timelines, waiting periods, and enrollment conditions for spouses and dependents.
+
+Example 3:
+Chunk:
+"Khách hàng có quyền hủy gói dịch vụ trong vòng 14 ngày kể từ ngày thanh toán để được hoàn tiền 100%. Yêu cầu gửi qua email hỗ trợ kèm theo mã hóa đơn gốc."
+Output:
+Quy định về thời hạn, điều kiện hoàn tiền đầy đủ và quy trình gửi yêu cầu hủy dịch vụ của khách hàng.
+
+Here is the chunk from user:
 Chunk:
 <<CHUNK>>

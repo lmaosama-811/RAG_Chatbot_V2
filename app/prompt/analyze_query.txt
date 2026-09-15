@@ -1,20 +1,52 @@
-Analyze the question and return a JSON object.
+Classify the user's question and generate search queries for document retrieval. You must reason internally but output ONLY the final JSON — no explanation, no markdown fences, no text before or after.
 
-Rules:
-- type "chit_chat": greetings, small talk, unrelated to documents
-- type "simple": single-topic, needs document lookup
-- type "complex": multi-part question
+Task:
+1. Classify the question into exactly one type:
+   - "chit_chat": greetings, small talk, or anything with no informational intent requiring document lookup
+   - "simple": a single, self-contained question answerable from one topic/document lookup
+   - "complex": contains multiple sub-questions, comparisons, or requires synthesizing multiple topics
+2. Generate two rounds of search queries:
+   - round1: 2 queries — clear, specific rewrites of the question using its own key terms
+   - round2: 2 queries — reformulated using synonyms, broader/narrower terms, or a different phrasing angle, to use only if round1 retrieves nothing
+   - For "chit_chat", round1 and round2 must both be empty arrays.
+3. Extract a "filter" object:
+   - If the question contains an explicit or clearly implied year/date, set {"year": <int>}
+   - Otherwise return {}
+   - Do not guess a year from vague terms like "recently" or "gần đây" — only extract if a specific year/date is stated or unambiguous (e.g. "last year" relative to a known current year IS extractable if current year is provided; otherwise leave {}).
 
-For queries, generate in 2 rounds in case first round fails to find results:
-- round1: rewritten queries (clear, specific)
-- round2: reformulated queries (synonyms, broader terms, different angle)
 
-Return ONLY valid JSON:
+Constraints
+- Output must be valid JSON only — parseable with no post-processing.
+- Never fabricate a year or filter values not present in the question.
+- Keep query strings in the same language as the input question.
+- Do not include commentary, keys, or fields beyond the schema below.
+
+Input format:
+Question: User’s question that need to be classified
+
+Output format:
 {
   "type": "chit_chat" | "simple" | "complex",
   "round1": ["query1", "query2"],
   "round2": ["query3", "query4"],
-  "filter": {"year": 2026} // Extract year if temporal phrase exists. Otherwise {}
+  "filter": {"year": 2026} 
 }
 
+
+Example 1:
+Question: "Chào bạn, khỏe không?"
+Output:
+{"type": "chit_chat", "round1": [], "round2": [], "filter": {}}
+
+Example 2:
+Question: "Chính sách bảo hành sản phẩm X là gì?"
+Output:
+{"type": "simple", "round1": ["chính sách bảo hành sản phẩm X", "điều khoản bảo hành X"], "round2": ["thời hạn đổi trả sản phẩm X", "quy định hậu mãi sản phẩm X"], "filter": {}}
+
+Example 3:
+Question: "So sánh doanh thu quý 4 năm 2025 với chi phí vận hành, và cho biết nguyên nhân chênh lệch"
+Output:
+{"type": "complex", "round1": ["doanh thu quý 4 năm 2025", "chi phí vận hành quý 4 năm 2025"], "round2": ["báo cáo tài chính quý 4 2025", "nguyên nhân chênh lệch doanh thu chi phí 2025"], "filter": {"year": 2025}}
+
+Here’s the question from user:
 Question: <<QUESTION>>
