@@ -251,3 +251,81 @@ LLMService.analyze_query()
 | `GET` | `/session/list` | List all conversation sessions |
 | `POST` | `/session/update/{session_id}` | Rename a session |
 | `DELETE` | `/session/delete/{session_id}` | Delete a session and its history |
+
+
+---
+
+## Evaluation Pipeline
+
+The `eval/` directory contains a **4-phase automated evaluation framework** that measures retrieval, reranking, and generation quality at both end-to-end and component levels.
+
+### Architecture
+
+```
+eval/
+├── config.py                        # Paths, thresholds, env vars
+├── data/
+│   ├── qa_pairs.json                # Ground-truth test cases (question + golden answer + golden chunk ids)
+│   └── chunks_dump.json             # Full corpus snapshot (all chunks with content)
+│
+├── phase2_collect/
+│   ├── collect.py                   # E2E run — drives full pipeline per test case
+│   ├── generator.py                 # Component isolated — Generator receives golden context
+│   └── reranker.py                  # Component isolated — Reranker receives retrieved ∪ golden pool
+│
+├── phase3_compute/
+│   ├── compute_metrics.py           # Compute all E2E metrics from collected JSON
+│   ├── compute_generator.py         # Compute Faithfulness_iso + AnsRel_iso
+│   └── compute_reranker.py          # Compute CtxPre_iso + MRR_iso + HitRate_iso
+│
+├── phase4_report/
+│   └── generate_report.py           # Combine all metrics → Markdown report
+│
+└── results/                         # Auto-generated outputs (gitignored)
+    ├── collected_<timestamp>.json
+    ├── generator_collected_<timestamp>.json
+    ├── reranker_collected_<timestamp>.json
+    ├── metrics_<timestamp>.json
+    ├── generator_metrics_<timestamp>.json
+    ├── reranker_metrics_<timestamp>.json
+    └── report_<timestamp>.md
+```
+
+### How to Run
+
+```bash
+# ── 0. Setup ──────────────────────────────────────────────────────────────────
+
+source eval_venv/bin/activate          # activate dedicated eval virtual environment
+docker compose up -d                   # ensure app services are up (FAISS index must be loaded)
+
+# ── 1. E2E Collection ─────────────────────────────────────────────────────────
+# Drives the full production pipeline (Analyzer → Retrieval → Reranker → Generator → H-Check)
+# for every test case in qa_pairs.json and saves raw step outputs to results/.
+
+python -m eval.phase2_collect.collect
+
+# Optional: run a subset only (useful during development)
+python -m eval.phase2_collect.collect --test-ids q001,q002,q003
+
+# ── 2. Component Isolated Collection ─────────────────────────────────────────
+# Evaluates each component independently under ideal input conditions.
+# reranker.py requires the collected JSON from Step 1 to build the candidate pool.
+
+python -m eval.phase2_collect.generator  # Generator gets golden context → answer → RAGAs
+python -m eval.phase2_collect.reranker   # Reranker gets retrieved ∪ golden pool → ranks → RAGAs
+
+# ── 3. Compute Metrics ────────────────────────────────────────────────────────
+# Pure computation — reads JSON, calculates scores. No LLM calls. Safe to re-run.
+
+python -m eval.phase3_compute.compute_metrics     # E2E: Hit@5, CtxRec, CtxPre, MRR, Faith, AnsRel, SemSim, HCheck
+python -m eval.phase3_compute.compute_generator   # Isolated: Faithfulness_iso, AnswerRelevancy_iso
+python -m eval.phase3_compute.compute_reranker    # Isolated: CtxPre_iso, MRR_iso, HitRate_iso@5
+
+# ── 4. Generate Report ────────────────────────────────────────────────────────
+# Picks up the latest JSON files automatically and writes a Markdown report.
+# If isolated metrics are missing, the report still runs — iso columns show "—".
+
+python -m eval.phase4_report.generate_report      # → eval/results/report_<YYYYMMDD_HHMMSS>.md
+```
+
