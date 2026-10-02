@@ -9,10 +9,11 @@ embeddings = OpenAIEmbeddings(
 )
 
 llm = ChatOpenAI(
-    model="openrouter/free",
+    model="deepseek/deepseek-chat-v3.1",  # paid model
     api_key= settings.api_key,
     base_url="https://openrouter.ai/api/v1",
     temperature=settings.temperature,
-    max_tokens=1000,
-    streaming=True #turn on streaming
+    max_tokens=32000,
+    request_timeout=60,   # 120s -- RAGAs calls co the cham
+    streaming=False         # turn on streaming
 )

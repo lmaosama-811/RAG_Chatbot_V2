@@ -1,0 +1,199 @@
+# docker-compose.yaml — RAG_Chatbot_V2
+#
+# Services:
+#   postgres : PostgreSQL — conversation_history, file_status, parent_store, summary
+#   redis    : Redis      — Celery broker + result backend
+#   api      : FastAPI    — uvicorn HTTP server (+ init_db on startup)
+#   worker   : Celery worker — process_upload_file_background, process_crawled_web_background
+#   beat     : Celery beat  — cron job auto-crawl every 6 hours
+#
+# Shared volumes:
+#   rag_data        : data/upload/ + data/indexes/ (api & worker both read/write)
+#   rag_government  : government_data/global_faiss_index (worker writes, api reads)
+#   rag_downloads   : downloaded attachments from web crawl
+#   rag_logs        : rotating log files (api & worker)
+#   rag_beat        : celerybeat-schedule state file
+#
+# Usage:
+#   docker compose up -d              # Start all services (detached)
+#   docker compose up -d --build      # Rebuild image then start
+#   docker compose logs -f api        # Follow api logs
+#   docker compose logs -f worker     # Follow worker logs
+#   docker compose down               # Stop (keep volumes)
+#   docker compose down -v            # Stop + delete ALL volumes (destructive!)
+#   docker compose restart api        # Restart only api (no rebuild)
+#
+# Prerequisites:
+#   - Copy env.example → .env and fill in API_KEY
+#   - .env does NOT need DATABASE_URL / REDIS — docker-compose overrides them
+#     via the environment: block below (uses Docker service names, not localhost)
+
+services:
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # PostgreSQL
+  # Tables: conversation_history, summary, file_status, parent_store
+  # init_db.py (chay boi api service) tao tables khi khoi dong lan dau.
+  # ──────────────────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: rag_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER:     ${POSTGRES_USER:-rag_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-rag_pass}
+      POSTGRES_DB:       ${POSTGRES_DB:-rag_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"           # Expose ra host de dev tools (DBeaver, psql) ket noi
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-rag_user} -d $${POSTGRES_DB:-rag_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s      # Cho postgres warm up truoc khi bat dau check
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # Redis
+  # appendonly yes: AOF persistence — task queue ton tai qua restart
+  # ──────────────────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: rag_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # API — FastAPI + uvicorn
+  #
+  # entrypoint.sh lam:
+  #   1. Cho postgres san sang (WAIT_FOR_DB=true)
+  #   2. Chay init_db.py tao tables (RUN_INIT_DB=true)
+  #   3. Chuyen qua uvicorn
+  #
+  # Dev mode: --reload hot-reload khi code thay doi (mount source .:/app)
+  # Prod mode: xoa --reload va volume mount .:/app
+  # ──────────────────────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rag_api
+    restart: unless-stopped
+    entrypoint: ["/app/scripts/entrypoint.sh"]
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    env_file: .env
+    environment:
+      # Override .env — dung Docker service names thay vi localhost
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-rag_user}:${POSTGRES_PASSWORD:-rag_pass}@postgres:5432/${POSTGRES_DB:-rag_db}
+      REDIS:        redis://redis:6379/0
+      # Entrypoint controls
+      WAIT_FOR_DB:  "true"
+      RUN_INIT_DB:  "true"     # Chi api tao tables, worker/beat khong can
+      DB_HOST:      postgres
+      DB_PORT:      "5432"
+    volumes:
+      - .:/app                          # Source mount cho --reload (dev only)
+      - rag_data:/app/data              # Uploaded files + FAISS indexes per file
+      - rag_government:/app/government_data
+      - rag_downloads:/app/downloads
+      - rag_logs:/app/logs
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # Worker — Celery worker
+  #
+  # Tasks:
+  #   - process_upload_file_background : embed + index uploaded files
+  #   - process_crawled_web_background : crawl web URL + embed + index
+  #
+  # -P eventlet: bat buoc vi celery_app.py goi eventlet.monkey_patch()
+  # --concurrency 2: gioi han concurrency de tranh OOM voi Docling + FAISS
+  # ──────────────────────────────────────────────────────────────────────────
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rag_worker
+    restart: unless-stopped
+    entrypoint: ["/app/scripts/entrypoint.sh"]
+    command: celery -A app.core.celery_app worker --loglevel=info -P eventlet --concurrency 2
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-rag_user}:${POSTGRES_PASSWORD:-rag_pass}@postgres:5432/${POSTGRES_DB:-rag_db}
+      REDIS:        redis://redis:6379/0
+      WAIT_FOR_DB:  "true"
+      RUN_INIT_DB:  "false"    # Api da tao tables roi
+      DB_HOST:      postgres
+      DB_PORT:      "5432"
+    volumes:
+      - .:/app
+      - rag_data:/app/data
+      - rag_government:/app/government_data
+      - rag_downloads:/app/downloads
+      - rag_logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # Beat — Celery beat scheduler
+  #
+  # Cron: tu dong crawl cac trang web moi 6 tieng (dinh nghia trong celery_app.py)
+  # CHI CHAY MOT INSTANCE — nhieu instance se tao duplicate tasks
+  # Beat khong can DB truc tiep (chi publish task vao Redis queue)
+  # ──────────────────────────────────────────────────────────────────────────
+  beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rag_beat
+    restart: unless-stopped
+    entrypoint: ["/app/scripts/entrypoint.sh"]
+    command: celery -A app.core.celery_app beat --loglevel=info --schedule=/app/celerybeat-data/celerybeat-schedule
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-rag_user}:${POSTGRES_PASSWORD:-rag_pass}@postgres:5432/${POSTGRES_DB:-rag_db}
+      REDIS:        redis://redis:6379/0
+      WAIT_FOR_DB:  "false"    # Beat chi can Redis, khong can postgres truc tiep
+      RUN_INIT_DB:  "false"
+    volumes:
+      - .:/app
+      - rag_beat:/app/celerybeat-data   # Persist beat schedule state
+      - rag_logs:/app/logs
+    depends_on:
+      redis:
+        condition: service_healthy
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Named volumes — managed by Docker, survive container recreation
+# docker compose down     : volumes giu nguyen
+# docker compose down -v  : volumes bi xoa (reset toan bo du lieu)
+# ─────────────────────────────────────────────────────────────────────────────
+volumes:
+  postgres_data:    # PostgreSQL WAL + table data
+  redis_data:       # Redis AOF log
+  rag_data:         # Uploaded files + FAISS indexes per file_id
+  rag_government:   # Global FAISS index cho crawled government articles
+  rag_downloads:    # Web crawl attachment downloads
+  rag_logs:         # Rotating application log files (api + worker)
+  rag_beat:         # Celery beat schedule state file

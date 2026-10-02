@@ -1,0 +1,47 @@
+# requirements_eval_all.txt
+# Toàn bộ thư viện cho Eval Pipeline (chạy độc lập trong venv)
+# Cài đặt: pip install -r requirements_eval_all.txt
+
+# --- Tự động tải PyTorch bản CPU (nhẹ ~190MB thay vì bản CUDA ~10GB) ---
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+
+# --- Core LangChain & LLM ---
+langchain==1.2.10
+langchain-community==0.4.1
+langchain-openai==1.1.10
+langchain-experimental>=0.3.0
+openai==2.21.0
+
+# --- Vector Store & Retrieval ---
+faiss-cpu==1.13.2
+rank_bm25==0.2.2
+
+# --- ML Models ---
+sentence-transformers==5.2.3
+
+# --- PDF Processing (Docling) ---
+docling==2.77.0
+langchain-docling==2.0.0
+pymupdf==1.27.2
+
+# --- Database & Config (cần cho app/db và app/core/env_config) ---
+sqlmodel==0.0.37
+psycopg[binary]==3.3.3
+pydantic-settings>=2.0.0
+
+# --- Utilities ---
+tiktoken==0.12.0
+langdetect==1.0.9
+
+# --- Eval Frameworks (Phase 2 - 4) ---
+ragas>=0.2.0
+datasets>=2.0.0
+ranx>=0.3.0
+tabulate>=0.9.0
+numpy>=1.24.0
+
+# --- LLM Judge (Google Gemini) ---
+langchain-google-genai>=2.0.0
+
+fastapi==0.133.0

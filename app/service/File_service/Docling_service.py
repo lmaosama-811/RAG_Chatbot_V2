@@ -1,5 +1,6 @@
 from docling.document_converter import DocumentConverter
-from langchain_docling import DoclingLoader 
+# DoclingLoader import duoc chuyen vao trong method (lazy import)
+# Tranh mpire/forkserver crash khi module duoc load trong Docker container
 import os 
 from docling.datamodel.base_models import InputFormat
 from docling_core.types.doc.document import DoclingDocument
@@ -26,6 +27,7 @@ class DoclingService:
         markdown_content = (doc.export_to_markdown() if isinstance(doc,DoclingDocument) else doc) #Get markdown content => Use for MarkdownHeaderSplitter
         return markdown_content,doc_title 
     def convert_docling_to_list_document(self,upload_file_path): #Convert pdf, docx, pptx, html, markdown to List[Document] (but slower than pymupdf and python-docx)
+        from langchain_docling import DoclingLoader  # Lazy import: tranh mpire crash khi import module-level
         loader = DoclingLoader(upload_file_path)
         list_LCDocument = loader.load()
         raw_name = os.path.basename(upload_file_path)

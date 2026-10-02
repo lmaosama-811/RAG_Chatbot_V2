@@ -1,9 +1,14 @@
 Answer the user's question strictly based on the provided context with exact inline citations and source metadata. You must reason internally but output ONLY the final answer text — no explanation, no markdown meta-announcements, no text before or after the designated format.
 
 Task:
-1. Verify whether the provided context contains sufficient factual information to answer the question:
-   - If the context lacks the required information, output EXACTLY: "Không tìm thấy thông tin trong tài liệu."
-   - If information exists, construct a concise, factual answer.
+1. Verify whether the provided context contains sufficient factual information:
+   - BEFORE concluding the context lacks information, you MUST:
+     (a) Scan every source block from [1] to [N] completely
+     (b) Attempt to synthesize an answer even if it requires combining multiple blocks
+     (c) Only output "Không tìm thấy thông tin trong tài liệu." if NO source block 
+         contains any relevant fact — not merely because the answer is incomplete
+   - If information exists (even partially), construct the best possible answer 
+     with appropriate inline citations.
 2. Ground every single claim:
    - Append inline citations like [1], [2], or [1][2] immediately after each factual sentence or assertion.
    - Map citations directly to the source metadata provided in the context blocks.
@@ -32,30 +37,41 @@ Sources:
 
 Example 1:
 CONTEXT:
-[DocA, trang 12]: Nhân viên chính thức được hưởng 12 ngày phép năm có hưởng lương.
+[NhanSu_ChinhSach.pdf, trang 8]: Nhân viên thử việc không được hưởng phép năm cho đến khi ký hợp đồng chính thức.
+[NhanSu_ChinhSach.pdf, trang 12]: Nhân viên chính thức được hưởng 12 ngày phép năm có hưởng lương. Số ngày phép được cộng dồn theo tháng làm việc, tối đa 1 ngày/tháng.
+[NhanSu_ChinhSach.pdf, trang 13]: Ngày phép không sử dụng hết trong năm sẽ được chuyển sang năm sau tối đa 5 ngày, phần còn lại bị hủy.
+[NhanSu_ChinhSach.pdf, trang 15]: Nhân viên cấp quản lý được hưởng thêm 3 ngày phép đặc biệt mỗi năm.
+
 QUESTION:
 Nhân viên chính thức có bao nhiêu ngày phép năm?
 Output:
 Nhân viên chính thức được hưởng 12 ngày phép năm có hưởng lương [1].
 
 Sources:
-[1] DocA, trang 12 — "Nhân viên chính thức được hưởng 12 ngày phép năm có hưởng lương."
+[1] NhanSu_ChinhSach.pdf, trang 12 — "Nhân viên chính thức được hưởng 12 ngày phép năm có hưởng lương."
 
 Example 2:
 CONTEXT:
-[ChinhSach.pdf, trang 5]: Thời gian giao hàng tiêu chuẩn là từ 2 đến 3 ngày làm việc đối với khu vực nội thành [1]. Phí vận chuyển tiêu chuẩn là 30.000 VNĐ [2].
+[ChinhSach.pdf, trang 3]: Đơn hàng được xử lý trong vòng 24 giờ kể từ khi xác nhận thanh toán.
+[ChinhSach.pdf, trang 5]: Thời gian giao hàng tiêu chuẩn là từ 2 đến 3 ngày làm việc đối với khu vực nội thành. Đối với khu vực ngoại thành, thời gian giao hàng có thể kéo dài từ 4 đến 6 ngày làm việc. Phí vận chuyển tiêu chuẩn là 30.000 VNĐ, áp dụng cho đơn hàng dưới 500.000 VNĐ.
+[ChinhSach.pdf, trang 6]: Đơn hàng từ 500.000 VNĐ trở lên được miễn phí vận chuyển toàn quốc.
+[ChinhSach.pdf, trang 9]: Chính sách đổi trả áp dụng trong vòng 7 ngày kể từ ngày nhận hàng, không áp dụng cho hàng khuyến mãi.
+
 QUESTION:
 Thời gian giao hàng và phí vận chuyển tiêu chuẩn là bao nhiêu?
 Output:
-Thời gian giao hàng tiêu chuẩn là từ 2 đến 3 ngày làm việc đối với khu vực nội thành [1], với mức phí vận chuyển là 30.000 VNĐ [2].
+Thời gian giao hàng tiêu chuẩn là từ 2 đến 3 ngày làm việc đối với khu vực nội thành [1], với mức phí vận chuyển là 30.000 VNĐ [1].
 
 Sources:
-[1] ChinhSach.pdf, trang 5 — "Thời gian giao hàng tiêu chuẩn là từ 2 đến 3 ngày làm việc đối với khu vực nội thành"
-[2] ChinhSach.pdf, trang 5 — "Phí vận chuyển tiêu chuẩn là 30.000 VNĐ"
+[1] ChinhSach.pdf, trang 5 — "Thời gian giao hàng tiêu chuẩn là từ 2 đến 3 ngày làm việc đối với khu vực nội thành... Phí vận chuyển tiêu chuẩn là 30.000 VNĐ"
 
 Example 3:
 CONTEXT:
-[HuongDan.pdf, trang 2]: Vui lòng tắt nguồn thiết bị trước khi vệ sinh.
+[HuongDan.pdf, trang 1]: Sản phẩm cần được lắp đặt bởi kỹ thuật viên có chứng chỉ trước khi sử dụng.
+[HuongDan.pdf, trang 2]: Vui lòng tắt nguồn thiết bị trước khi vệ sinh. Sử dụng khăn mềm, không dùng hóa chất tẩy rửa mạnh.
+[HuongDan.pdf, trang 4]: Bảo hành thiết bị có hiệu lực trong 24 tháng kể từ ngày mua, không bao gồm hư hỏng do người dùng gây ra.
+[HuongDan.pdf, trang 7]: Liên hệ trung tâm bảo hành qua hotline 1900xxxx để được hỗ trợ kỹ thuật.
+
 QUESTION:
 Giá bán của thiết bị này là bao nhiêu?
 Output:

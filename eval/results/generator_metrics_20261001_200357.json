@@ -1,0 +1,1853 @@
+{
+  "generated_at": "20261001_200357",
+  "source_collected": "generator_collected_20261001_174526.json",
+  "aggregate": {
+    "total": 204,
+    "ok": 204,
+    "errors": 0,
+    "golden_chunks_found_rate": 1.0,
+    "faithfulness_iso_mean": 0.8485,
+    "answer_rel_iso_mean": 0.6299,
+    "gen_latency_mean_ms": 17295.9309,
+    "ragas_latency_mean_ms": 21956.0735
+  },
+  "per_case": [
+    {
+      "test_id": "q001",
+      "group": "A1-retriever-miss-semsim-ok",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7669373365371257,
+      "gen_latency_ms": 13262.6,
+      "ragas_latency_ms": 12327.2
+    },
+    {
+      "test_id": "q002",
+      "group": "A1-retriever-miss-semsim-ok",
+      "golden_found": true,
+      "faithfulness_iso": null,
+      "answer_rel_iso": null,
+      "gen_latency_ms": 5254.7,
+      "ragas_latency_ms": 8783.4
+    },
+    {
+      "test_id": "q003",
+      "group": "A1-precision-low-semsim-ok",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.9819745364014622,
+      "gen_latency_ms": 4500.3,
+      "ragas_latency_ms": 10592.3
+    },
+    {
+      "test_id": "q004",
+      "group": "A1-precision-low-semsim-ok",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.9738330833953049,
+      "gen_latency_ms": 31162.8,
+      "ragas_latency_ms": 12337.7
+    },
+    {
+      "test_id": "q005",
+      "group": "A1-ansrel-low-semsim-ok",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.9568382267854885,
+      "gen_latency_ms": 29058.3,
+      "ragas_latency_ms": 13367.4
+    },
+    {
+      "test_id": "q006",
+      "group": "A1-ansrel-low-semsim-ok",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.8695536459366555,
+      "gen_latency_ms": 39765.3,
+      "ragas_latency_ms": 11705.0
+    },
+    {
+      "test_id": "q007",
+      "group": "A2-subject-confusion",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.737212817739419,
+      "gen_latency_ms": 16564.6,
+      "ragas_latency_ms": 9663.0
+    },
+    {
+      "test_id": "q008",
+      "group": "A2-subject-confusion",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.781562487472475,
+      "gen_latency_ms": 14292.4,
+      "ragas_latency_ms": 8776.1
+    },
+    {
+      "test_id": "q009",
+      "group": "A2-category-confusion",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7522163751212922,
+      "gen_latency_ms": 16234.5,
+      "ragas_latency_ms": 7992.7
+    },
+    {
+      "test_id": "q010",
+      "group": "A2-category-confusion",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.5876689110155042,
+      "gen_latency_ms": 12556.3,
+      "ragas_latency_ms": 11191.4
+    },
+    {
+      "test_id": "q011",
+      "group": "A2-direction-confusion",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6997571202837055,
+      "gen_latency_ms": 15743.0,
+      "ragas_latency_ms": 14295.2
+    },
+    {
+      "test_id": "q012",
+      "group": "A2-direction-confusion",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6863194624858796,
+      "gen_latency_ms": 9844.5,
+      "ragas_latency_ms": 10270.6
+    },
+    {
+      "test_id": "q013",
+      "group": "B-ctx-rec-high",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.585120594549904,
+      "gen_latency_ms": 12440.6,
+      "ragas_latency_ms": 15493.8
+    },
+    {
+      "test_id": "q014",
+      "group": "B-ctx-rec-low",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.8492370988525239,
+      "gen_latency_ms": 14358.8,
+      "ragas_latency_ms": 9817.3
+    },
+    {
+      "test_id": "q015",
+      "group": "B-ctx-pre-high",
+      "golden_found": true,
+      "faithfulness_iso": 0.8,
+      "answer_rel_iso": 0.7683387676606936,
+      "gen_latency_ms": 42490.3,
+      "ragas_latency_ms": 13627.5
+    },
+    {
+      "test_id": "q016",
+      "group": "B-ctx-pre-low",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6502279730239595,
+      "gen_latency_ms": 17336.3,
+      "ragas_latency_ms": 11870.4
+    },
+    {
+      "test_id": "q017",
+      "group": "B-faith-high",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.8304131551212499,
+      "gen_latency_ms": 14725.9,
+      "ragas_latency_ms": 12905.7
+    },
+    {
+      "test_id": "q018",
+      "group": "B-faith-low",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7026075826884051,
+      "gen_latency_ms": 12643.9,
+      "ragas_latency_ms": 6772.8
+    },
+    {
+      "test_id": "q019",
+      "group": "B-ansrel-high",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6105300411372799,
+      "gen_latency_ms": 16801.9,
+      "ragas_latency_ms": 10368.5
+    },
+    {
+      "test_id": "q020",
+      "group": "B-ansrel-low",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.0,
+      "gen_latency_ms": 2568.1,
+      "ragas_latency_ms": 12035.3
+    },
+    {
+      "test_id": "q021",
+      "group": "C-faith-high-ansrel-low",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7518076067797528,
+      "gen_latency_ms": 31030.2,
+      "ragas_latency_ms": 14843.2
+    },
+    {
+      "test_id": "q022",
+      "group": "C-faith-low-ansrel-high",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.843894190201164,
+      "gen_latency_ms": 16798.9,
+      "ragas_latency_ms": 12458.5
+    },
+    {
+      "test_id": "q023",
+      "group": "D-mismatch",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.5419322778672484,
+      "gen_latency_ms": 12631.9,
+      "ragas_latency_ms": 16381.8
+    },
+    {
+      "test_id": "q024",
+      "group": "D-mismatch",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.8569839343890713,
+      "gen_latency_ms": 33150.1,
+      "ragas_latency_ms": 27081.7
+    },
+    {
+      "test_id": "q025",
+      "group": "D-omission",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.8023881877313084,
+      "gen_latency_ms": 12587.3,
+      "ragas_latency_ms": 9191.4
+    },
+    {
+      "test_id": "q026",
+      "group": "D-omission",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.4829569806994768,
+      "gen_latency_ms": 15705.3,
+      "ragas_latency_ms": 21971.6
+    },
+    {
+      "test_id": "q027",
+      "group": "D-numdate",
+      "golden_found": true,
+      "faithfulness_iso": 0.75,
+      "answer_rel_iso": 0.4273158526282993,
+      "gen_latency_ms": 13195.9,
+      "ragas_latency_ms": 26427.9
+    },
+    {
+      "test_id": "q028",
+      "group": "D-numdate",
+      "golden_found": true,
+      "faithfulness_iso": 0.75,
+      "answer_rel_iso": 0.7978485042253683,
+      "gen_latency_ms": 21701.4,
+      "ragas_latency_ms": 17831.9
+    },
+    {
+      "test_id": "q029",
+      "group": "X-multi-hop",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6061951355981127,
+      "gen_latency_ms": 27900.3,
+      "ragas_latency_ms": 7393.3
+    },
+    {
+      "test_id": "q030",
+      "group": "X-multi-hop",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.5865881488860011,
+      "gen_latency_ms": 50857.2,
+      "ragas_latency_ms": 11172.4
+    },
+    {
+      "test_id": "q031",
+      "group": "X-multi-hop",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.8446374360399275,
+      "gen_latency_ms": 15317.1,
+      "ragas_latency_ms": 15350.7
+    },
+    {
+      "test_id": "q032",
+      "group": "X-multi-hop",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.8230506939455962,
+      "gen_latency_ms": 29225.8,
+      "ragas_latency_ms": 11670.5
+    },
+    {
+      "test_id": "q033",
+      "group": "X-multi-hop",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7817300682062532,
+      "gen_latency_ms": 13482.3,
+      "ragas_latency_ms": 11958.1
+    },
+    {
+      "test_id": "q034",
+      "group": "X-multi-hop",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6550999020771211,
+      "gen_latency_ms": 19856.0,
+      "ragas_latency_ms": 9816.7
+    },
+    {
+      "test_id": "q035",
+      "group": "X-negation-exception",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.8426742674341849,
+      "gen_latency_ms": 46273.0,
+      "ragas_latency_ms": 14065.5
+    },
+    {
+      "test_id": "q036",
+      "group": "X-negation-exception",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.9670896296773048,
+      "gen_latency_ms": 21060.6,
+      "ragas_latency_ms": 7990.3
+    },
+    {
+      "test_id": "q037",
+      "group": "X-negation-exception",
+      "golden_found": true,
+      "faithfulness_iso": 0.0,
+      "answer_rel_iso": 0.0,
+      "gen_latency_ms": 2743.4,
+      "ragas_latency_ms": 14150.1
+    },
+    {
+      "test_id": "q038",
+      "group": "X-negation-exception",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7850688647419549,
+      "gen_latency_ms": 12674.7,
+      "ragas_latency_ms": 12025.3
+    },
+    {
+      "test_id": "q039",
+      "group": "X-negation-exception",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.8305675051277049,
+      "gen_latency_ms": 31797.8,
+      "ragas_latency_ms": 14214.0
+    },
+    {
+      "test_id": "q040",
+      "group": "X-negation-exception",
+      "golden_found": true,
+      "faithfulness_iso": null,
+      "answer_rel_iso": null,
+      "gen_latency_ms": 33553.4,
+      "ragas_latency_ms": 4630.9
+    },
+    {
+      "test_id": "q041",
+      "group": "X-temporal-ambiguity",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6843987000280632,
+      "gen_latency_ms": 41814.5,
+      "ragas_latency_ms": 15908.5
+    },
+    {
+      "test_id": "q042",
+      "group": "X-temporal-ambiguity",
+      "golden_found": true,
+      "faithfulness_iso": 0.0,
+      "answer_rel_iso": 0.7429383542561736,
+      "gen_latency_ms": 8866.9,
+      "ragas_latency_ms": 14113.4
+    },
+    {
+      "test_id": "q043",
+      "group": "X-temporal-ambiguity",
+      "golden_found": true,
+      "faithfulness_iso": 0.0,
+      "answer_rel_iso": 0.8896309522370163,
+      "gen_latency_ms": 8924.6,
+      "ragas_latency_ms": 7661.3
+    },
+    {
+      "test_id": "q044",
+      "group": "X-temporal-ambiguity",
+      "golden_found": true,
+      "faithfulness_iso": 0.0,
+      "answer_rel_iso": 0.66764495144471,
+      "gen_latency_ms": 16078.3,
+      "ragas_latency_ms": 11807.3
+    },
+    {
+      "test_id": "q045",
+      "group": "X-temporal-ambiguity",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7835662844888508,
+      "gen_latency_ms": 24557.4,
+      "ragas_latency_ms": 11481.3
+    },
+    {
+      "test_id": "q046",
+      "group": "X-implicit-condition",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.5617811733651917,
+      "gen_latency_ms": 30698.5,
+      "ragas_latency_ms": 14961.9
+    },
+    {
+      "test_id": "q047",
+      "group": "X-implicit-condition",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7495844101836651,
+      "gen_latency_ms": 12569.7,
+      "ragas_latency_ms": 13253.0
+    },
+    {
+      "test_id": "q048",
+      "group": "X-implicit-condition",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.8355920925288991,
+      "gen_latency_ms": 14783.7,
+      "ragas_latency_ms": 9724.4
+    },
+    {
+      "test_id": "q049",
+      "group": "X-implicit-condition",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.48757018423031423,
+      "gen_latency_ms": 18142.6,
+      "ragas_latency_ms": 8526.2
+    },
+    {
+      "test_id": "q050",
+      "group": "X-implicit-condition",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.8902158399323811,
+      "gen_latency_ms": 7955.1,
+      "ragas_latency_ms": 11035.0
+    },
+    {
+      "test_id": "q051",
+      "group": "X-scope-boundary",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.9999999999999998,
+      "gen_latency_ms": 8930.4,
+      "ragas_latency_ms": 15048.8
+    },
+    {
+      "test_id": "q052",
+      "group": "X-scope-boundary",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.8495740295227738,
+      "gen_latency_ms": 22632.0,
+      "ragas_latency_ms": 7935.3
+    },
+    {
+      "test_id": "q053",
+      "group": "X-scope-boundary",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.0,
+      "gen_latency_ms": 1853.7,
+      "ragas_latency_ms": 11882.5
+    },
+    {
+      "test_id": "q054",
+      "group": "X-scope-boundary",
+      "golden_found": true,
+      "faithfulness_iso": 0.6666666666666666,
+      "answer_rel_iso": 0.8040151620377124,
+      "gen_latency_ms": 11491.9,
+      "ragas_latency_ms": 14332.1
+    },
+    {
+      "test_id": "q055",
+      "group": "X-scope-boundary",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.8877750029698295,
+      "gen_latency_ms": 14426.8,
+      "ragas_latency_ms": 9968.9
+    },
+    {
+      "test_id": "q056",
+      "group": "X-comparative",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.918668869836706,
+      "gen_latency_ms": 16962.6,
+      "ragas_latency_ms": 9326.4
+    },
+    {
+      "test_id": "q057",
+      "group": "X-comparative",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.8153798424347365,
+      "gen_latency_ms": 14530.9,
+      "ragas_latency_ms": 13608.2
+    },
+    {
+      "test_id": "q058",
+      "group": "X-comparative",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.9999994818728681,
+      "gen_latency_ms": 6108.3,
+      "ragas_latency_ms": 11450.5
+    },
+    {
+      "test_id": "q059",
+      "group": "X-comparative",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.8237732962995273,
+      "gen_latency_ms": 6177.5,
+      "ragas_latency_ms": 15549.9
+    },
+    {
+      "test_id": "q060",
+      "group": "X-comparative",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.8586314708398632,
+      "gen_latency_ms": 7323.1,
+      "ragas_latency_ms": 9374.1
+    },
+    {
+      "test_id": "q061",
+      "group": "X-procedural-sequence",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7095191833201705,
+      "gen_latency_ms": 15362.0,
+      "ragas_latency_ms": 15437.2
+    },
+    {
+      "test_id": "q062",
+      "group": "X-procedural-sequence",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7390347301504647,
+      "gen_latency_ms": 14752.6,
+      "ragas_latency_ms": 13682.3
+    },
+    {
+      "test_id": "q063",
+      "group": "X-procedural-sequence",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6273538578031551,
+      "gen_latency_ms": 8878.5,
+      "ragas_latency_ms": 11912.3
+    },
+    {
+      "test_id": "q064",
+      "group": "X-procedural-sequence",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6048113826216726,
+      "gen_latency_ms": 11374.2,
+      "ragas_latency_ms": 9282.1
+    },
+    {
+      "test_id": "q065",
+      "group": "X-procedural-sequence",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.48352425538346655,
+      "gen_latency_ms": 14769.4,
+      "ragas_latency_ms": 8490.0
+    },
+    {
+      "test_id": "q066",
+      "group": "X-authority-id",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.9406244003200672,
+      "gen_latency_ms": 3418.5,
+      "ragas_latency_ms": 12914.8
+    },
+    {
+      "test_id": "q067",
+      "group": "X-authority-id",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.875233980637796,
+      "gen_latency_ms": 4042.0,
+      "ragas_latency_ms": 14446.7
+    },
+    {
+      "test_id": "q068",
+      "group": "X-authority-id",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6767249376829343,
+      "gen_latency_ms": 7203.8,
+      "ragas_latency_ms": 11522.1
+    },
+    {
+      "test_id": "q069",
+      "group": "X-authority-id",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.79134208890858,
+      "gen_latency_ms": 4763.2,
+      "ragas_latency_ms": 11297.2
+    },
+    {
+      "test_id": "q070",
+      "group": "X-authority-id",
+      "golden_found": true,
+      "faithfulness_iso": null,
+      "answer_rel_iso": null,
+      "gen_latency_ms": 6871.1,
+      "ragas_latency_ms": 13457.3
+    },
+    {
+      "test_id": "q071",
+      "group": "X-financial-penalty",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.0,
+      "gen_latency_ms": 1984.1,
+      "ragas_latency_ms": 18741.4
+    },
+    {
+      "test_id": "q072",
+      "group": "X-financial-penalty",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.0,
+      "gen_latency_ms": 1600.2,
+      "ragas_latency_ms": 12554.2
+    },
+    {
+      "test_id": "q073",
+      "group": "X-financial-penalty",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.0,
+      "gen_latency_ms": 1691.6,
+      "ragas_latency_ms": 11162.8
+    },
+    {
+      "test_id": "q074",
+      "group": "X-financial-penalty",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.0,
+      "gen_latency_ms": 1989.5,
+      "ragas_latency_ms": 16345.8
+    },
+    {
+      "test_id": "q075",
+      "group": "X-cross-law",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.8632249281216945,
+      "gen_latency_ms": 4947.3,
+      "ragas_latency_ms": 10691.2
+    },
+    {
+      "test_id": "q076",
+      "group": "X-cross-law",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.9250749040733961,
+      "gen_latency_ms": 17751.3,
+      "ragas_latency_ms": 13946.6
+    },
+    {
+      "test_id": "q077",
+      "group": "X-cross-law",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7488813441479435,
+      "gen_latency_ms": 43425.7,
+      "ragas_latency_ms": 9868.2
+    },
+    {
+      "test_id": "q078",
+      "group": "X-cross-law",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.9022526032323339,
+      "gen_latency_ms": 15452.8,
+      "ragas_latency_ms": 16565.1
+    },
+    {
+      "test_id": "q079",
+      "group": "X-tricky-factual",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6467727468874857,
+      "gen_latency_ms": 25171.6,
+      "ragas_latency_ms": 8815.5
+    },
+    {
+      "test_id": "q080",
+      "group": "X-tricky-factual",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7925569772495091,
+      "gen_latency_ms": 12275.4,
+      "ragas_latency_ms": 12415.2
+    },
+    {
+      "test_id": "q081",
+      "group": "X-tricky-factual",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7672702317099122,
+      "gen_latency_ms": 25759.1,
+      "ragas_latency_ms": 10461.6
+    },
+    {
+      "test_id": "q082",
+      "group": "X-tricky-factual",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6295911173770016,
+      "gen_latency_ms": 31258.5,
+      "ragas_latency_ms": 21074.2
+    },
+    {
+      "test_id": "q083",
+      "group": "X-true-false",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.9241988834562015,
+      "gen_latency_ms": 40501.0,
+      "ragas_latency_ms": 11547.2
+    },
+    {
+      "test_id": "q084",
+      "group": "X-true-false",
+      "golden_found": true,
+      "faithfulness_iso": 0.6666666666666666,
+      "answer_rel_iso": 0.7845053072365888,
+      "gen_latency_ms": 21399.4,
+      "ragas_latency_ms": 12890.4
+    },
+    {
+      "test_id": "q085",
+      "group": "X-true-false",
+      "golden_found": true,
+      "faithfulness_iso": 0.6666666666666666,
+      "answer_rel_iso": 0.648384790860139,
+      "gen_latency_ms": 26951.5,
+      "ragas_latency_ms": 17171.8
+    },
+    {
+      "test_id": "q086",
+      "group": "X-true-false",
+      "golden_found": true,
+      "faithfulness_iso": 0.75,
+      "answer_rel_iso": 0.7194454547224288,
+      "gen_latency_ms": 18427.8,
+      "ragas_latency_ms": 12604.5
+    },
+    {
+      "test_id": "q087",
+      "group": "X-ambiguous-subject",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7304232826744604,
+      "gen_latency_ms": 22673.3,
+      "ragas_latency_ms": 11633.1
+    },
+    {
+      "test_id": "q088",
+      "group": "X-ambiguous-subject",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.449011584947436,
+      "gen_latency_ms": 8929.5,
+      "ragas_latency_ms": 8215.6
+    },
+    {
+      "test_id": "q089",
+      "group": "X-ambiguous-subject",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7655301015991903,
+      "gen_latency_ms": 18017.1,
+      "ragas_latency_ms": 11932.6
+    },
+    {
+      "test_id": "q090",
+      "group": "X-ambiguous-subject",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.5132053176611243,
+      "gen_latency_ms": 17705.1,
+      "ragas_latency_ms": 14682.2
+    },
+    {
+      "test_id": "q091",
+      "group": "X-unanswerable",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.0,
+      "gen_latency_ms": 3447.8,
+      "ragas_latency_ms": 10920.5
+    },
+    {
+      "test_id": "q092",
+      "group": "X-unanswerable",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.0,
+      "gen_latency_ms": 4515.2,
+      "ragas_latency_ms": 11884.4
+    },
+    {
+      "test_id": "q093",
+      "group": "X-unanswerable",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.0,
+      "gen_latency_ms": 2590.7,
+      "ragas_latency_ms": 12816.1
+    },
+    {
+      "test_id": "q094",
+      "group": "X-unanswerable",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.0,
+      "gen_latency_ms": 1561.2,
+      "ragas_latency_ms": 11793.5
+    },
+    {
+      "test_id": "q095",
+      "group": "X-partial-coverage",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.0,
+      "gen_latency_ms": 3138.9,
+      "ragas_latency_ms": 12032.5
+    },
+    {
+      "test_id": "q096",
+      "group": "X-partial-coverage",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.0,
+      "gen_latency_ms": 13884.5,
+      "ragas_latency_ms": 15312.5
+    },
+    {
+      "test_id": "q097",
+      "group": "X-partial-coverage",
+      "golden_found": true,
+      "faithfulness_iso": 0.8333333333333334,
+      "answer_rel_iso": 0.5419917916393782,
+      "gen_latency_ms": 74702.1,
+      "ragas_latency_ms": 15813.9
+    },
+    {
+      "test_id": "q098",
+      "group": "X-partial-coverage",
+      "golden_found": true,
+      "faithfulness_iso": 0.7142857142857143,
+      "answer_rel_iso": 0.6048097077597104,
+      "gen_latency_ms": 49196.7,
+      "ragas_latency_ms": 15196.6
+    },
+    {
+      "test_id": "q099",
+      "group": "X-other",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.8689018003030079,
+      "gen_latency_ms": 21469.5,
+      "ragas_latency_ms": 143766.8
+    },
+    {
+      "test_id": "q100",
+      "group": "X-other",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7901713123740692,
+      "gen_latency_ms": 78337.4,
+      "ragas_latency_ms": 83022.2
+    },
+    {
+      "test_id": "q101",
+      "group": "A2-new-category-confusion",
+      "golden_found": true,
+      "faithfulness_iso": 0.0,
+      "answer_rel_iso": 0.6153189984184146,
+      "gen_latency_ms": 9779.2,
+      "ragas_latency_ms": 7578.1
+    },
+    {
+      "test_id": "q102",
+      "group": "A2-new-category-confusion",
+      "golden_found": true,
+      "faithfulness_iso": 0.0,
+      "answer_rel_iso": 0.638842901595415,
+      "gen_latency_ms": 80695.4,
+      "ragas_latency_ms": 14170.4
+    },
+    {
+      "test_id": "q103",
+      "group": "A2-new-scope-confusion",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7611930610202188,
+      "gen_latency_ms": 16690.3,
+      "ragas_latency_ms": 8265.2
+    },
+    {
+      "test_id": "q104",
+      "group": "A2-new-scope-confusion",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6344153005787183,
+      "gen_latency_ms": 23738.5,
+      "ragas_latency_ms": 12488.1
+    },
+    {
+      "test_id": "q105",
+      "group": "A2-new-direction-confusion",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6115540169071462,
+      "gen_latency_ms": 11579.4,
+      "ragas_latency_ms": 14892.4
+    },
+    {
+      "test_id": "q106",
+      "group": "A2-new-category-confusion",
+      "golden_found": true,
+      "faithfulness_iso": 0.0,
+      "answer_rel_iso": 0.7468826875947191,
+      "gen_latency_ms": 4822.0,
+      "ragas_latency_ms": 11878.8
+    },
+    {
+      "test_id": "q107",
+      "group": "A2-new-scope-confusion",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.7934882845557818,
+      "gen_latency_ms": 19223.6,
+      "ragas_latency_ms": 8468.7
+    },
+    {
+      "test_id": "q108",
+      "group": "A2-new-scope-confusion",
+      "golden_found": true,
+      "faithfulness_iso": 0.0,
+      "answer_rel_iso": 0.6994615348798909,
+      "gen_latency_ms": 9360.5,
+      "ragas_latency_ms": 7862.6
+    },
+    {
+      "test_id": "q109",
+      "group": "B-ctx-pre-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.8107807442905828,
+      "gen_latency_ms": 17037.0,
+      "ragas_latency_ms": 78788.1
+    },
+    {
+      "test_id": "q110",
+      "group": "B-ctx-pre-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6371272409551576,
+      "gen_latency_ms": 11928.4,
+      "ragas_latency_ms": 11213.5
+    },
+    {
+      "test_id": "q111",
+      "group": "B-ctx-pre-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7754480920401071,
+      "gen_latency_ms": 15839.0,
+      "ragas_latency_ms": 146382.3
+    },
+    {
+      "test_id": "q112",
+      "group": "B-ctx-pre-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6099685978258398,
+      "gen_latency_ms": 14764.7,
+      "ragas_latency_ms": 7318.7
+    },
+    {
+      "test_id": "q113",
+      "group": "B-faith-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7390911751043555,
+      "gen_latency_ms": 33285.8,
+      "ragas_latency_ms": 15685.7
+    },
+    {
+      "test_id": "q114",
+      "group": "B-faith-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.5945727779532436,
+      "gen_latency_ms": 10611.5,
+      "ragas_latency_ms": 19155.6
+    },
+    {
+      "test_id": "q115",
+      "group": "B-faith-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.6666666666666666,
+      "answer_rel_iso": 0.795442237863488,
+      "gen_latency_ms": 80946.0,
+      "ragas_latency_ms": 12919.2
+    },
+    {
+      "test_id": "q116",
+      "group": "B-faith-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6059810281540744,
+      "gen_latency_ms": 64700.5,
+      "ragas_latency_ms": 15150.4
+    },
+    {
+      "test_id": "q117",
+      "group": "B-faith-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6081749440207435,
+      "gen_latency_ms": 18344.0,
+      "ragas_latency_ms": 7967.7
+    },
+    {
+      "test_id": "q118",
+      "group": "B-ansrel-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.6503668145764592,
+      "gen_latency_ms": 16905.0,
+      "ragas_latency_ms": 10657.9
+    },
+    {
+      "test_id": "q119",
+      "group": "B-ansrel-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7002017403358077,
+      "gen_latency_ms": 19370.0,
+      "ragas_latency_ms": 9204.4
+    },
+    {
+      "test_id": "q120",
+      "group": "B-ansrel-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6047668399903184,
+      "gen_latency_ms": 11599.7,
+      "ragas_latency_ms": 49847.5
+    },
+    {
+      "test_id": "q121",
+      "group": "B-ansrel-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7961604537026962,
+      "gen_latency_ms": 20687.7,
+      "ragas_latency_ms": 9435.6
+    },
+    {
+      "test_id": "q122",
+      "group": "B-ansrel-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7005227188209818,
+      "gen_latency_ms": 22138.2,
+      "ragas_latency_ms": 16320.3
+    },
+    {
+      "test_id": "q123",
+      "group": "C-faith-high-ansrel-low-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.8571428571428571,
+      "answer_rel_iso": 0.6867026547019897,
+      "gen_latency_ms": 34524.0,
+      "ragas_latency_ms": 15690.5
+    },
+    {
+      "test_id": "q124",
+      "group": "C-faith-high-ansrel-low-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6929808165923469,
+      "gen_latency_ms": 63223.0,
+      "ragas_latency_ms": 12108.6
+    },
+    {
+      "test_id": "q125",
+      "group": "C-faith-high-ansrel-low-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7727252618277227,
+      "gen_latency_ms": 8272.0,
+      "ragas_latency_ms": 9494.9
+    },
+    {
+      "test_id": "q126",
+      "group": "C-faith-high-ansrel-low-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.764372087023421,
+      "gen_latency_ms": 24029.3,
+      "ragas_latency_ms": 11123.1
+    },
+    {
+      "test_id": "q127",
+      "group": "D-omission-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.4179064716425159,
+      "gen_latency_ms": 18061.6,
+      "ragas_latency_ms": 45744.2
+    },
+    {
+      "test_id": "q128",
+      "group": "D-omission-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.2,
+      "answer_rel_iso": 0.33186860584847305,
+      "gen_latency_ms": 14539.5,
+      "ragas_latency_ms": 56151.5
+    },
+    {
+      "test_id": "q129",
+      "group": "D-omission-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.25,
+      "answer_rel_iso": 0.7493644442591489,
+      "gen_latency_ms": 14835.0,
+      "ragas_latency_ms": 52753.4
+    },
+    {
+      "test_id": "q130",
+      "group": "D-omission-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.42950317750119055,
+      "gen_latency_ms": 6341.8,
+      "ragas_latency_ms": 22986.3
+    },
+    {
+      "test_id": "q131",
+      "group": "D-omission-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.3333333333333333,
+      "answer_rel_iso": 0.5451976023139786,
+      "gen_latency_ms": 16878.1,
+      "ragas_latency_ms": 32262.9
+    },
+    {
+      "test_id": "q132",
+      "group": "D-omission-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.7,
+      "answer_rel_iso": 0.4270464224181045,
+      "gen_latency_ms": 53356.3,
+      "ragas_latency_ms": 33430.2
+    },
+    {
+      "test_id": "q133",
+      "group": "D-omission-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7329054247583463,
+      "gen_latency_ms": 13237.2,
+      "ragas_latency_ms": 145805.1
+    },
+    {
+      "test_id": "q134",
+      "group": "D-omission-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.6,
+      "answer_rel_iso": 0.360566506306976,
+      "gen_latency_ms": 3821.5,
+      "ragas_latency_ms": 64603.3
+    },
+    {
+      "test_id": "q135",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": null,
+      "answer_rel_iso": null,
+      "gen_latency_ms": 43680.0,
+      "ragas_latency_ms": 180541.1
+    },
+    {
+      "test_id": "q136",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.442237514945318,
+      "gen_latency_ms": 17304.0,
+      "ragas_latency_ms": 35882.0
+    },
+    {
+      "test_id": "q137",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.6666666666666666,
+      "answer_rel_iso": 0.43176096637094186,
+      "gen_latency_ms": 21747.0,
+      "ragas_latency_ms": 48615.9
+    },
+    {
+      "test_id": "q138",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6332202405455941,
+      "gen_latency_ms": 11797.0,
+      "ragas_latency_ms": 68604.7
+    },
+    {
+      "test_id": "q139",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.3875615557934587,
+      "gen_latency_ms": 14061.7,
+      "ragas_latency_ms": 104144.6
+    },
+    {
+      "test_id": "q140",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.75,
+      "answer_rel_iso": 0.36632164392180083,
+      "gen_latency_ms": 34381.8,
+      "ragas_latency_ms": 119631.9
+    },
+    {
+      "test_id": "q141",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.3497687944855171,
+      "gen_latency_ms": 22557.9,
+      "ragas_latency_ms": 57160.6
+    },
+    {
+      "test_id": "q142",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.4,
+      "answer_rel_iso": 0.4122955334348742,
+      "gen_latency_ms": 17268.3,
+      "ragas_latency_ms": 56631.2
+    },
+    {
+      "test_id": "q143",
+      "group": "X-multi-hop-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.6914923332945979,
+      "gen_latency_ms": 35002.9,
+      "ragas_latency_ms": 19442.6
+    },
+    {
+      "test_id": "q144",
+      "group": "X-multi-hop-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6484275783472343,
+      "gen_latency_ms": 26045.3,
+      "ragas_latency_ms": 15232.5
+    },
+    {
+      "test_id": "q145",
+      "group": "X-multi-hop-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.25,
+      "answer_rel_iso": 0.657259882161383,
+      "gen_latency_ms": 13778.6,
+      "ragas_latency_ms": 10668.4
+    },
+    {
+      "test_id": "q146",
+      "group": "X-multi-hop-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.5648545913294737,
+      "gen_latency_ms": 21612.6,
+      "ragas_latency_ms": 15874.2
+    },
+    {
+      "test_id": "q147",
+      "group": "X-multi-hop-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.644935224119539,
+      "gen_latency_ms": 41173.7,
+      "ragas_latency_ms": 10213.6
+    },
+    {
+      "test_id": "q148",
+      "group": "X-conditional-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6683611355564054,
+      "gen_latency_ms": 36493.6,
+      "ragas_latency_ms": 12523.6
+    },
+    {
+      "test_id": "q149",
+      "group": "X-conditional-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6538952900352567,
+      "gen_latency_ms": 44427.1,
+      "ragas_latency_ms": 11410.0
+    },
+    {
+      "test_id": "q150",
+      "group": "X-conditional-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6557514986631421,
+      "gen_latency_ms": 21081.7,
+      "ragas_latency_ms": 16616.1
+    },
+    {
+      "test_id": "q151",
+      "group": "X-conditional-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7351778601177741,
+      "gen_latency_ms": 9180.8,
+      "ragas_latency_ms": 12413.0
+    },
+    {
+      "test_id": "q152",
+      "group": "X-conditional-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6784781687915641,
+      "gen_latency_ms": 15496.7,
+      "ragas_latency_ms": 8389.0
+    },
+    {
+      "test_id": "q153",
+      "group": "X-synthesis-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.75,
+      "answer_rel_iso": 0.5242162498006518,
+      "gen_latency_ms": 45803.8,
+      "ragas_latency_ms": 14914.7
+    },
+    {
+      "test_id": "q154",
+      "group": "X-synthesis-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6873786243559391,
+      "gen_latency_ms": 92617.4,
+      "ragas_latency_ms": 16225.8
+    },
+    {
+      "test_id": "q155",
+      "group": "X-synthesis-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.6666666666666666,
+      "answer_rel_iso": 0.5920474538600329,
+      "gen_latency_ms": 31891.0,
+      "ragas_latency_ms": 11141.7
+    },
+    {
+      "test_id": "q156",
+      "group": "X-synthesis-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6856141990817142,
+      "gen_latency_ms": 25957.7,
+      "ragas_latency_ms": 11824.1
+    },
+    {
+      "test_id": "q157",
+      "group": "X-exception-spotting",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6105088238532922,
+      "gen_latency_ms": 16445.6,
+      "ragas_latency_ms": 21573.5
+    },
+    {
+      "test_id": "q158",
+      "group": "X-exception-spotting",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6493838608792293,
+      "gen_latency_ms": 22712.3,
+      "ragas_latency_ms": 14099.7
+    },
+    {
+      "test_id": "q159",
+      "group": "X-exception-spotting",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.6704906386760152,
+      "gen_latency_ms": 4547.5,
+      "ragas_latency_ms": 14148.6
+    },
+    {
+      "test_id": "q160",
+      "group": "X-exception-spotting",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.5519369854529098,
+      "gen_latency_ms": 3379.7,
+      "ragas_latency_ms": 12120.1
+    },
+    {
+      "test_id": "q161",
+      "group": "X-exception-spotting",
+      "golden_found": true,
+      "faithfulness_iso": 0.75,
+      "answer_rel_iso": 0.6178873261245478,
+      "gen_latency_ms": 4916.5,
+      "ragas_latency_ms": 9606.6
+    },
+    {
+      "test_id": "q162",
+      "group": "X-other-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7765694521354628,
+      "gen_latency_ms": 3525.6,
+      "ragas_latency_ms": 9116.2
+    },
+    {
+      "test_id": "q163",
+      "group": "X-other-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.8041588471398975,
+      "gen_latency_ms": 4078.8,
+      "ragas_latency_ms": 9037.1
+    },
+    {
+      "test_id": "q164",
+      "group": "X-other-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.6318879995739581,
+      "gen_latency_ms": 3566.7,
+      "ragas_latency_ms": 8735.7
+    },
+    {
+      "test_id": "q165",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.6164106099299024,
+      "gen_latency_ms": 2744.3,
+      "ragas_latency_ms": 18297.5
+    },
+    {
+      "test_id": "q166",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.4892685451845117,
+      "gen_latency_ms": 2668.3,
+      "ragas_latency_ms": 46708.0
+    },
+    {
+      "test_id": "q167",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.5973056014943486,
+      "gen_latency_ms": 2973.5,
+      "ragas_latency_ms": 38479.3
+    },
+    {
+      "test_id": "q168",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.5379490940825244,
+      "gen_latency_ms": 63067.1,
+      "ragas_latency_ms": 36172.0
+    },
+    {
+      "test_id": "q169",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.6162212495844087,
+      "gen_latency_ms": 2839.3,
+      "ragas_latency_ms": 36857.5
+    },
+    {
+      "test_id": "q170",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.5031177265183072,
+      "gen_latency_ms": 2823.6,
+      "ragas_latency_ms": 48812.0
+    },
+    {
+      "test_id": "q171",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.49104022990605545,
+      "gen_latency_ms": 2288.3,
+      "ragas_latency_ms": 35711.5
+    },
+    {
+      "test_id": "q172",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.3333333333333333,
+      "answer_rel_iso": 0.6106297003661578,
+      "gen_latency_ms": 2944.3,
+      "ragas_latency_ms": 42799.2
+    },
+    {
+      "test_id": "q173",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.75,
+      "answer_rel_iso": 0.4587265747545191,
+      "gen_latency_ms": 2946.7,
+      "ragas_latency_ms": 57863.7
+    },
+    {
+      "test_id": "q174",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.6666666666666666,
+      "answer_rel_iso": 0.678221026277646,
+      "gen_latency_ms": 3640.0,
+      "ragas_latency_ms": 52784.8
+    },
+    {
+      "test_id": "q175",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6424004339314573,
+      "gen_latency_ms": 3141.8,
+      "ragas_latency_ms": 37205.4
+    },
+    {
+      "test_id": "q176",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.0,
+      "answer_rel_iso": 0.5391835562227059,
+      "gen_latency_ms": 3018.2,
+      "ragas_latency_ms": 46537.0
+    },
+    {
+      "test_id": "q177",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.4785636543946909,
+      "gen_latency_ms": 2470.3,
+      "ragas_latency_ms": 26302.1
+    },
+    {
+      "test_id": "q178",
+      "group": "D-numdate-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.8571428571428571,
+      "answer_rel_iso": 0.44251671621390704,
+      "gen_latency_ms": 5163.1,
+      "ragas_latency_ms": 61695.0
+    },
+    {
+      "test_id": "q179",
+      "group": "B-faith-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6257383972352514,
+      "gen_latency_ms": 4973.2,
+      "ragas_latency_ms": 13379.1
+    },
+    {
+      "test_id": "q180",
+      "group": "B-faith-high-new",
+      "golden_found": true,
+      "faithfulness_iso": null,
+      "answer_rel_iso": null,
+      "gen_latency_ms": 4900.1,
+      "ragas_latency_ms": 153588.9
+    },
+    {
+      "test_id": "q181",
+      "group": "B-faith-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6662325438529764,
+      "gen_latency_ms": 3526.0,
+      "ragas_latency_ms": 12968.1
+    },
+    {
+      "test_id": "q182",
+      "group": "B-faith-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7417939334269146,
+      "gen_latency_ms": 2540.3,
+      "ragas_latency_ms": 14508.1
+    },
+    {
+      "test_id": "q183",
+      "group": "B-faith-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.5926088435881316,
+      "gen_latency_ms": 4055.7,
+      "ragas_latency_ms": 15214.2
+    },
+    {
+      "test_id": "q184",
+      "group": "B-faith-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 0.0,
+      "answer_rel_iso": 0.0,
+      "gen_latency_ms": 2600.4,
+      "ragas_latency_ms": 15124.0
+    },
+    {
+      "test_id": "q185",
+      "group": "B-faith-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6357777312782804,
+      "gen_latency_ms": 3886.7,
+      "ragas_latency_ms": 11825.3
+    },
+    {
+      "test_id": "q186",
+      "group": "B-faith-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.5712212882411729,
+      "gen_latency_ms": 3867.4,
+      "ragas_latency_ms": 19676.7
+    },
+    {
+      "test_id": "q187",
+      "group": "B-ctx-pre-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6433695161117039,
+      "gen_latency_ms": 2755.5,
+      "ragas_latency_ms": 9116.2
+    },
+    {
+      "test_id": "q188",
+      "group": "B-ctx-pre-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.583084343879314,
+      "gen_latency_ms": 4289.6,
+      "ragas_latency_ms": 12238.6
+    },
+    {
+      "test_id": "q189",
+      "group": "B-ctx-pre-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6316122165099333,
+      "gen_latency_ms": 2742.0,
+      "ragas_latency_ms": 12917.6
+    },
+    {
+      "test_id": "q190",
+      "group": "B-ctx-pre-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6532022238609265,
+      "gen_latency_ms": 4713.9,
+      "ragas_latency_ms": 16605.1
+    },
+    {
+      "test_id": "q191",
+      "group": "B-ctx-pre-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.7359534326142455,
+      "gen_latency_ms": 3682.7,
+      "ragas_latency_ms": 9151.0
+    },
+    {
+      "test_id": "q192",
+      "group": "B-ansrel-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.5293703368733033,
+      "gen_latency_ms": 4783.9,
+      "ragas_latency_ms": 10993.9
+    },
+    {
+      "test_id": "q193",
+      "group": "B-ansrel-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6556024644037037,
+      "gen_latency_ms": 3554.4,
+      "ragas_latency_ms": 12508.7
+    },
+    {
+      "test_id": "q194",
+      "group": "B-ansrel-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.5543951563203939,
+      "gen_latency_ms": 2717.7,
+      "ragas_latency_ms": 14001.0
+    },
+    {
+      "test_id": "q195",
+      "group": "B-ansrel-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.5914534819334752,
+      "gen_latency_ms": 3867.5,
+      "ragas_latency_ms": 13410.6
+    },
+    {
+      "test_id": "q196",
+      "group": "B-ansrel-high-new",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6633854402696544,
+      "gen_latency_ms": 4856.8,
+      "ragas_latency_ms": 14490.9
+    },
+    {
+      "test_id": "q197",
+      "group": "A2-new-cross-chunk",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6113879235002914,
+      "gen_latency_ms": 3467.3,
+      "ragas_latency_ms": 14206.4
+    },
+    {
+      "test_id": "q198",
+      "group": "A2-new-cross-chunk",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6407871467665872,
+      "gen_latency_ms": 5330.9,
+      "ragas_latency_ms": 14441.7
+    },
+    {
+      "test_id": "q199",
+      "group": "A2-new-cross-chunk",
+      "golden_found": true,
+      "faithfulness_iso": 0.8,
+      "answer_rel_iso": 0.6832951276591123,
+      "gen_latency_ms": 10413.5,
+      "ragas_latency_ms": 14965.3
+    },
+    {
+      "test_id": "q200",
+      "group": "A2-new-cross-chunk",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.6202890984055456,
+      "gen_latency_ms": 5696.3,
+      "ragas_latency_ms": 7571.7
+    },
+    {
+      "test_id": "q201",
+      "group": "A2-new-cross-chunk",
+      "golden_found": true,
+      "faithfulness_iso": 0.5,
+      "answer_rel_iso": 0.5491425682983697,
+      "gen_latency_ms": 5503.5,
+      "ragas_latency_ms": 14933.4
+    },
+    {
+      "test_id": "q202",
+      "group": "A2-new-cross-chunk",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.5493928966404281,
+      "gen_latency_ms": 7586.2,
+      "ragas_latency_ms": 10374.7
+    },
+    {
+      "test_id": "q203",
+      "group": "X-law-date-confusion",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.5443736156970117,
+      "gen_latency_ms": 4673.5,
+      "ragas_latency_ms": 8375.7
+    },
+    {
+      "test_id": "q204",
+      "group": "X-law-date-confusion",
+      "golden_found": true,
+      "faithfulness_iso": 1.0,
+      "answer_rel_iso": 0.5736143460008953,
+      "gen_latency_ms": 2789.8,
+      "ragas_latency_ms": 11794.8
+    }
+  ],
+  "errors": []
+}

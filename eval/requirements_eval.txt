@@ -1,0 +1,28 @@
+# eval/requirements_eval.txt
+# Thu vien BO SUNG cho eval pipeline (chua co trong requirements.txt chinh)
+# Cai dat: pip install -r requirements.txt && pip install -r eval/requirements_eval.txt
+
+# RAG evaluation framework
+json-repair>=0.30.0
+
+ragas>=0.2.0
+datasets>=2.0.0
+
+# Information Retrieval metrics (Hit Rate, MRR)
+ranx>=0.3.0
+
+# Format bao cao
+tabulate>=0.9.0
+
+# numpy (ragas dependency, co the da co nhung pin version)
+numpy>=1.24.0
+
+# --- DA CO TRONG requirements.txt chinh, KHONG CAN CAI LAI ---
+# sentence-transformers==5.2.3   ← da co (dung cho SemSimilarityScorer)
+# tiktoken==0.12.0               ← da co (dung cho token counting)
+# langchain-community==0.4.1     ← da co
+# faiss-cpu==1.13.2              ← da co
+
+# --- TUY CHON: Gemini lam judge LLM ---
+# Them vao .env: GEMINI_API_KEY=... va JUDGE_MODEL=gemini-1.5-flash
+# pip install langchain-google-genai>=1.0.0

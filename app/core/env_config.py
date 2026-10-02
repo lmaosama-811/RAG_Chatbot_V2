@@ -16,6 +16,8 @@ class Settings(BaseSettings):
     max_retry: int
     confidence_threshold: float
     target_extensions: list[str]
+    # Eval pipeline - judge LLM (optional, fallback to generator LLM if not set)
+    judge_model: str | None = None
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8"

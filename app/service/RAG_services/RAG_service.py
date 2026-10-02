@@ -51,7 +51,7 @@ class RAGService:
 
             blocks.append(
                 f"[{i}] Nguồn: {file_name}{page_info}\n"
-                f"Trích xuất: {doc.page_content[:400]}..."
+                f"Trích xuất: {doc.page_content}..."
             )
         return "\n\n".join(blocks)
     

@@ -1,0 +1,36 @@
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+venv/
+.venv/
+
+# Runtime data — provided via Docker volumes, not baked into image
+data/
+government_data/
+downloads/
+logs/
+celerybeat-schedule.*
+
+# Eval pipeline — not needed in production image
+eval/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Git
+.git/
+.gitignore
+
+# Secrets — injected via env_file, never bake into image
+.env
+*.env
+
+# Tests
+tests/
